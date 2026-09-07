@@ -9,7 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python scripts/check_repo_state.py
+      - run: python scripts/task_guard.py
+      - name: Enforce active scope on pull requests
+        if: github.event_name == 'pull_request'
+        run: python scripts/task_guard.py --base-ref origin/${{ github.base_ref }}
