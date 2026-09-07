@@ -1,5 +1,6 @@
 version: 1
 active_task: null
+lifecycle_state: idle
 branch: null
 started_at: null
 
