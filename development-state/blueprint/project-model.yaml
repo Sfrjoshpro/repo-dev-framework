@@ -1,0 +1,12 @@
+version: 1
+nodes: []
+edges: []
+flows: []
+
+status_values:
+  - unknown
+  - designed
+  - planned
+  - implementing
+  - verified
+  - blocked

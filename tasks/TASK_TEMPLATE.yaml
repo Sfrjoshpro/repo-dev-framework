@@ -1,0 +1,26 @@
+id: EXAMPLE-001
+title: Replace with a short task title
+status: backlog
+
+goal: >-
+  State the observable result this task should produce.
+
+why: >-
+  Explain why the task exists and what requirement or problem drives it.
+
+required_context: []
+allowed_paths: []
+non_goals: []
+
+dependencies: []
+unknowns: []
+
+validation: []
+
+completion:
+  implementation_complete: false
+  validation_passed: false
+  diff_reviewed: false
+  state_updated: false
+
+handoff_notes: []
