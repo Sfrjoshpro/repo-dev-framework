@@ -1,0 +1,9 @@
+version: 1
+active_task: null
+branch: null
+started_at: null
+
+allowed_paths: []
+expected_validation: []
+known_unknowns: []
+notes: []

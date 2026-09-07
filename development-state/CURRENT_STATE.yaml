@@ -1,0 +1,15 @@
+version: 1
+project_phase: bootstrap
+status: ready
+
+summary: >-
+  Repository framework initialized. No project-specific implementation is present.
+
+current_milestone: null
+active_task: null
+blockers: []
+
+next_valid_actions:
+  - define project design truth
+  - create the initial project model
+  - create the first bounded task
