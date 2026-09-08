@@ -1,6 +1,6 @@
 id: V8-BLUEPRINT-VISUALIZATION-CONTRACT
 title: Define the blueprint visualization contract
-status: active
+status: validating
 
 goal: >-
   Define the smallest durable design contract for visualizing the self-hosted project
@@ -58,7 +58,7 @@ validation:
   - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
 
 completion:
-  implementation_complete: false
+  implementation_complete: true
   validation_passed: false
   diff_reviewed: false
   state_updated: false
@@ -67,3 +67,4 @@ completion:
 
 handoff_notes:
   - Definition of Ready was satisfied before activation: observable goal, exact paths, non-goals, dependencies, zero unresolved unknowns, and validation were declared.
+  - The visualization contract is implemented as a read-only presentation contract over the existing project-model vocabulary and bounded-context rules.
