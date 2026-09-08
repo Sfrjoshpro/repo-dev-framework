@@ -1,7 +1,33 @@
-version: 1
-nodes: []
-edges: []
-flows: []
+version: 2
+schema_version: 1
+
+# The blueprint is intentionally selective. Model enough detail to support
+# planning, navigation, debugging, scope selection, and handoff.
+
+node_types:
+  - system
+  - component
+  - module
+  - file
+  - requirement
+  - test
+  - external
+
+edge_types:
+  - contains
+  - depends_on
+  - routes_to
+  - reads
+  - writes
+  - constrains
+  - implements
+  - verifies
+  - triggers
+
+flow_types:
+  - user
+  - logic
+  - data
 
 status_values:
   - unknown
@@ -10,3 +36,218 @@ status_values:
   - implementing
   - verified
   - blocked
+
+nodes:
+  - id: framework
+    type: system
+    name: Repository Development Framework
+    status: implementing
+    responsibility: Coordinate bounded, stateful repository development.
+    paths: []
+    requirement_refs: []
+    test_refs: []
+    tags:
+      - framework
+
+  - id: framework.agent_entry
+    type: file
+    name: Agent entry point
+    status: verified
+    responsibility: Route a fresh agent to the minimum required project context.
+    paths:
+      - AGENTS.md
+    requirement_refs:
+      - req.bounded_context
+    test_refs: []
+    tags:
+      - context
+
+  - id: framework.active_work
+    type: file
+    name: Active work state
+    status: verified
+    responsibility: Persist the current task, branch, scope, validation, and unknowns.
+    paths:
+      - development-state/ACTIVE_WORK.yaml
+    requirement_refs:
+      - req.bounded_scope
+    test_refs:
+      - test.task_guard
+    tags:
+      - state
+
+  - id: framework.task_contract
+    type: file
+    name: Task contract
+    status: verified
+    responsibility: Define goal, allowed paths, non-goals, unknowns, validation, and completion evidence.
+    paths:
+      - tasks/TASK_TEMPLATE.yaml
+    requirement_refs:
+      - req.bounded_scope
+    test_refs:
+      - test.task_guard
+    tags:
+      - scope
+
+  - id: framework.blueprint
+    type: file
+    name: Project blueprint
+    status: implementing
+    responsibility: Map project structure, dependencies, requirements, evidence, and important flows.
+    paths:
+      - development-state/blueprint/project-model.yaml
+    requirement_refs:
+      - req.bounded_context
+    test_refs:
+      - test.repo_structure
+    tags:
+      - architecture
+      - navigation
+
+  - id: framework.repo_check
+    type: file
+    name: Repository structural check
+    status: verified
+    responsibility: Verify required framework artifacts and blueprint sections exist.
+    paths:
+      - scripts/check_repo_state.py
+    requirement_refs:
+      - req.persisted_state
+    test_refs:
+      - test.repo_structure
+    tags:
+      - validation
+
+  - id: req.bounded_context
+    type: requirement
+    name: Bounded context loading
+    status: designed
+    responsibility: Agents should load only the context needed for the active task.
+    paths:
+      - docs/development/CONTEXT_POLICY.md
+    requirement_refs: []
+    test_refs: []
+    tags:
+      - requirement
+
+  - id: req.bounded_scope
+    type: requirement
+    name: Bounded implementation scope
+    status: designed
+    responsibility: Implementation must remain inside the active task's approved paths.
+    paths:
+      - docs/development/TASK_LIFECYCLE.md
+    requirement_refs: []
+    test_refs:
+      - test.task_guard
+    tags:
+      - requirement
+
+  - id: req.persisted_state
+    type: requirement
+    name: Persisted development state
+    status: designed
+    responsibility: Important development knowledge must survive session boundaries in repository state.
+    paths:
+      - docs/development/CHECKPOINTS.md
+    requirement_refs: []
+    test_refs:
+      - test.repo_structure
+    tags:
+      - requirement
+
+  - id: test.task_guard
+    type: test
+    name: Task scope guard
+    status: verified
+    responsibility: Detect task readiness or branch changes outside approved paths.
+    paths:
+      - scripts/task_guard.py
+    requirement_refs:
+      - req.bounded_scope
+    test_refs: []
+    tags:
+      - validation
+
+  - id: test.repo_structure
+    type: test
+    name: Repository structure check
+    status: verified
+    responsibility: Detect missing required framework artifacts or blueprint sections.
+    paths:
+      - scripts/check_repo_state.py
+    requirement_refs:
+      - req.persisted_state
+    test_refs: []
+    tags:
+      - validation
+
+edges:
+  - from: framework
+    to: framework.agent_entry
+    type: contains
+  - from: framework
+    to: framework.active_work
+    type: contains
+  - from: framework
+    to: framework.task_contract
+    type: contains
+  - from: framework
+    to: framework.blueprint
+    type: contains
+  - from: framework.agent_entry
+    to: framework.active_work
+    type: routes_to
+  - from: framework.active_work
+    to: framework.task_contract
+    type: depends_on
+  - from: framework.task_contract
+    to: framework.active_work
+    type: constrains
+  - from: framework.blueprint
+    to: req.bounded_context
+    type: implements
+  - from: test.task_guard
+    to: req.bounded_scope
+    type: verifies
+  - from: test.repo_structure
+    to: req.persisted_state
+    type: verifies
+
+flows:
+  - id: flow.task_delivery
+    name: Bounded task delivery
+    type: user
+    status: implementing
+    entry: framework.agent_entry
+    steps:
+      - node: framework.agent_entry
+        action: Read repository instructions.
+      - node: framework.active_work
+        action: Resolve current state and active scope.
+      - node: framework.task_contract
+        action: Confirm goal, allowed paths, unknowns, and validation.
+      - node: framework.blueprint
+        action: Load only relevant architecture and dependency context.
+      - node: test.task_guard
+        action: Check scope before implementation and handoff.
+      - node: test.repo_structure
+        action: Validate required framework state before checkpoint.
+    outcome: A reviewed change with bounded scope and persisted handoff state.
+
+  - id: flow.context_resolution
+    name: Agent context resolution
+    type: logic
+    status: implementing
+    entry: framework.agent_entry
+    steps:
+      - node: framework.agent_entry
+        action: Route to current state.
+      - node: framework.active_work
+        action: Identify active task and allowed paths.
+      - node: framework.task_contract
+        action: Identify required context and dependencies.
+      - node: framework.blueprint
+        action: Follow only relevant graph relationships and flow nodes.
+    outcome: A minimal task-specific context set without default whole-repository scanning.
