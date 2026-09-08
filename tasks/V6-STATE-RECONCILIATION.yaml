@@ -1,6 +1,6 @@
 id: V6-STATE-RECONCILIATION
 title: Reconcile persisted repository state after V5
-status: ready
+status: active
 
 goal: >-
   Reconcile development-state/CURRENT_STATE.yaml with the already-recorded V5
