@@ -1,30 +1,12 @@
 version: 1
-active_task: tasks/V9-CONTEXT-WORKING-SET.yaml
-lifecycle_state: validating
-branch: feat/v9-context-working-set
-started_at: 2026-09-08
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V9-CONTEXT-WORKING-SET.yaml
-  - development-state/CURRENT_STATE.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/ACTIVE_CONTEXT.yaml
-  - development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml
-  - AGENTS.md
-  - docs/development/CONTEXT_POLICY.md
-  - repo_framework/__main__.py
-  - repo_framework/context.py
-  - repo_framework/health.py
-  - scripts/task_guard.py
-  - .github/workflows/framework-check.yml
-expected_validation:
-  - python -m repo_framework context
-  - python -m repo_framework check
-  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml
-  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml --base-ref origin/main
-  - review final diff against allowed_paths
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V9 implementation is complete and diff-reviewed.
-  - Framework Check run 124 passed with automatic context validation.
-  - Context health is expected to be YELLOW at this checkpoint because the bounded working set reached 12/15 files.
+  - V9 Context Working Set completed and checkpointed in development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml.
+  - ACTIVE_CONTEXT is reset to idle; the next task must initialize context before its pre-implementation guard.
