@@ -1,10 +1,19 @@
 version: 1
-active_task: null
-lifecycle_state: idle
-branch: null
-started_at: null
+active_task: tasks/V4-BLUEPRINT-FLOW.yaml
+lifecycle_state: active
+branch: feat/blueprint-flow-model
+started_at: 2026-09-07
 
-allowed_paths: []
-expected_validation: []
+allowed_paths:
+  - tasks/V4-BLUEPRINT-FLOW.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - scripts/check_repo_state.py
+expected_validation:
+  - python scripts/check_repo_state.py
+  - review blueprint example for valid node, edge, and flow references
+  - review final diff against allowed_paths
 known_unknowns: []
-notes: []
+notes:
+  - V4 is deliberately using the framework to build the framework.
