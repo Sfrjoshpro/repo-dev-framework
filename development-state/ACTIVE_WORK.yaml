@@ -1,23 +1,13 @@
 version: 1
-active_task: tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
-lifecycle_state: validating
-branch: chore/v7-blueprint-self-hosting
-started_at: 2026-09-07T21:13:00-04:00
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
-  - development-state/CURRENT_STATE.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/blueprint/project-model.yaml
-  - development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml
-expected_validation:
-  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
-  - python -m repo_framework check
-  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
-  - review blueprint references for valid node, edge, and flow IDs
-  - review final diff against allowed_paths
-  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V7 blueprint implementation is complete and validation is in progress.
-  - No executable repository-health or task-guard behavior was changed.
+  - V7 Blueprint Self-Hosting completed and checkpointed in development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml.
+  - V7 is ready for pull request and no subsequent milestone has been started on this branch.
+  - Context health should report RED while idle, recommending a fresh chat for the next milestone after merge.
