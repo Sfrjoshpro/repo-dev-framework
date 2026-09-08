@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: docs/v10-compute-market-routing-contract
 started_at: 2026-09-08
 
@@ -12,12 +12,12 @@ allowed_paths:
   - development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
   - docs/architecture/COMPUTE_MARKET_ROUTING.md
 expected_validation:
-  - python -m repo_framework context
-  - python -m repo_framework check
-  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
-  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml --base-ref origin/main
+  - Framework Check passes with active V10 context/state
+  - V10 task contract directly satisfies task-guard readiness fields
+  - pull-request Framework Check enforces branch-base ACTIVE_WORK allowed_paths
   - review final diff against allowed_paths
 known_unknowns: []
 notes:
   - V9 is merged on main.
-  - V10 persists the provider-agnostic compute-market and verified-cost routing contract before implementation.
+  - V10 compute-market routing contract is implemented and under validation.
+  - Literal local task-specific CLI invocation is unavailable through the GitHub connector; do not claim it ran.
