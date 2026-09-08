@@ -1,13 +1,24 @@
 version: 1
-active_task: null
-lifecycle_state: idle
-branch: null
-started_at: null
+active_task: tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+lifecycle_state: active
+branch: chore/v7-blueprint-self-hosting
+started_at: 2026-09-07T21:13:00-04:00
 
-allowed_paths: []
-expected_validation: []
+allowed_paths:
+  - tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml
+expected_validation:
+  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
+  - review blueprint references for valid node, edge, and flow IDs
+  - review final diff against allowed_paths
+  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
 known_unknowns: []
 notes:
-  - V6 state reconciliation completed and checkpointed in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
-  - Persisted current state is aligned with completed V5 evidence and the framework blueprint.
-  - Context health should report RED while idle, recommending a fresh chat for the next milestone.
+  - V7 was selected from the persisted blueprint's unfinished self-hosting state.
+  - Task satisfies Definition of Ready and has been activated before implementation.
+  - No blueprint implementation changes have been made yet.
