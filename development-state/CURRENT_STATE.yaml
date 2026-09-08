@@ -1,18 +1,17 @@
 version: 1
 project_phase: framework-development
-status: validating
+status: ready
 
 summary: >-
-  V5 repository health work is checkpointed as complete. V6 reconciled persisted
-  current-state metadata with the verified framework state and is now validating
-  repository health, branch scope, and closeout evidence.
+  V5 repository health and V6 state reconciliation are checkpointed complete.
+  Persisted repository state now reflects the verified framework-development baseline
+  and the repository is idle, coherent, and recoverable for the next bounded milestone.
 
-current_milestone: V6-STATE-RECONCILIATION
-active_task: tasks/V6-STATE-RECONCILIATION.yaml
+current_milestone: null
+active_task: null
 blockers: []
 
 next_valid_actions:
-  - run repository health validation
-  - run the V6 task guard against origin/main
-  - review the full branch diff against V6 allowed_paths
-  - record the V6 checkpoint and close the task if validation passes
+  - identify the next smallest coherent milestone from persisted project knowledge
+  - create a bounded task contract before implementation
+  - activate only a ready task with explicit allowed_paths and validation
