@@ -1,0 +1,42 @@
+version: 1
+task_id: V6-STATE-RECONCILIATION
+checkpoint: milestone-complete
+branch: chore/v6-state-reconciliation
+commit: null
+
+summary: >-
+  Reconciled stale persisted repository state after V5. CURRENT_STATE now reflects
+  framework-development rather than bootstrap, V6 validation is clean, and no
+  framework feature or out-of-scope implementation was added.
+
+completed:
+  - Reconciled CURRENT_STATE with the completed V5 checkpoint and current blueprint evidence.
+  - Kept V6 limited to the four declared state/task/handoff paths.
+  - Preserved zero unresolved unknowns and introduced no new design decisions.
+
+validation:
+  commands:
+    - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml
+    - python -m repo_framework check
+    - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml --base-ref origin/main
+    - review final diff against allowed_paths
+  passed:
+    - Pre-implementation task guard returned task guard: OK.
+    - Repository health passed in GitHub Actions workflow run 34175634712.
+    - Branch-base task guard returned task guard: OK.
+    - Branch comparison showed only V6 allowed paths before checkpoint creation.
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Close V6 to done, return ACTIVE_WORK to idle, run final repository health, and
+  open a PR if the post-checkpoint branch diff remains within the four allowed paths.
+
+relevant_paths:
+  - tasks/V6-STATE-RECONCILIATION.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V6-STATE-RECONCILIATION.yaml
+notes:
+  - V6 is state reconciliation only; no framework feature milestone was started.
