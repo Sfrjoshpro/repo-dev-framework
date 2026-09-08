@@ -3,16 +3,16 @@ project_phase: framework-development
 status: ready
 
 summary: >-
-  V5 repository health, V6 state reconciliation, and V7 Blueprint Self-Hosting are
-  checkpointed complete. The self-hosted project blueprint now models the verified
-  repository-health subsystem and repository/context-health flow. The repository is
-  idle, coherent, and ready for the V7 pull request; no V8 milestone has been started.
+  V7 Blueprint Self-Hosting is merged to main and repository health passed on the merge
+  commit. V8 Blueprint Visualization Contract is the active bounded milestone. Its purpose
+  is to define visualization behavior from the existing project model before any UI stack
+  or implementation is chosen.
 
-current_milestone: null
-active_task: null
+current_milestone: V8-BLUEPRINT-VISUALIZATION-CONTRACT
+active_task: tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
 blockers: []
 
 next_valid_actions:
-  - open the V7 pull request from chore/v7-blueprint-self-hosting
-  - merge only after pull-request validation passes
-  - after merge, identify any next milestone from persisted project knowledge in a fresh bounded task
+  - run the task-specific pre-implementation guard for V8
+  - if the guard passes, implement only the visualization contract within allowed_paths
+  - if a required decision or path falls outside the contract, reconcile the task before continuing
