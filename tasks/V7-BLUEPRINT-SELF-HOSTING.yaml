@@ -1,6 +1,6 @@
 id: V7-BLUEPRINT-SELF-HOSTING
 title: Extend blueprint self-hosting coverage for repository health
-status: validating
+status: done
 
 goal: >-
   Extend the machine-readable project blueprint so it models the verified repository
@@ -56,7 +56,7 @@ validation:
 
 completion:
   implementation_complete: true
-  validation_passed: false
+  validation_passed: true
   diff_reviewed: true
   state_updated: true
   blocking_unknowns_resolved: true
@@ -64,6 +64,7 @@ completion:
 
 handoff_notes:
   - Blueprint models the verified repository-health subsystem and repository/context-health flow without changing executable behavior.
-  - Repository health and the standard task guard pass in GitHub Actions while V7 is validating.
+  - Repository health, compatibility health entry point, and the standard task guard passed in GitHub Actions while V7 was validating.
+  - The user ran the explicit branch-base task guard against origin/main and reported task guard: OK.
   - Final branch comparison contains only declared V7 allowed paths.
-  - The explicit branch-base task guard remains the only pending validation item before V7 can move to done.
+  - V7 is complete and ready for pull request; no V8 work was started on this branch.
