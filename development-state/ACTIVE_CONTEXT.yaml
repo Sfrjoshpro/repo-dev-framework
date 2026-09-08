@@ -14,6 +14,7 @@ working_set:
   - development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml
   - repo_framework/context.py
   - repo_framework/health.py
+  - .github/workflows/framework-check.yml
 expanded_paths: []
 expansion_log: []
 broad_searches: 0
