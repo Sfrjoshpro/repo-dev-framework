@@ -1,12 +1,23 @@
 version: 1
-active_task: null
-lifecycle_state: idle
-branch: null
-started_at: null
+active_task: tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+lifecycle_state: active
+branch: docs/v10-compute-market-routing-contract
+started_at: 2026-09-08
 
-allowed_paths: []
-expected_validation: []
+allowed_paths:
+  - tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+  - development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - docs/architecture/COMPUTE_MARKET_ROUTING.md
+expected_validation:
+  - python -m repo_framework context
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml --base-ref origin/main
+  - review final diff against allowed_paths
 known_unknowns: []
 notes:
-  - V9 Context Working Set completed and checkpointed in development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml.
-  - ACTIVE_CONTEXT is reset to idle; the next task must initialize context before its pre-implementation guard.
+  - V9 is merged on main.
+  - V10 persists the provider-agnostic compute-market and verified-cost routing contract before implementation.
