@@ -1,0 +1,13 @@
+version: 1
+unknowns: []
+
+# Entry shape:
+# - id: U-001
+#   task_id: EXAMPLE-001
+#   summary: Short description of the unresolved question.
+#   impact: What work or decision is blocked by this unknown.
+#   evidence_checked: []
+#   owner: maintainer
+#   status: open
+#   resolution: null
+#   decision_ref: null

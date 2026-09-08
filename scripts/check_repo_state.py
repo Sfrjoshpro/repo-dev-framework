@@ -9,8 +9,12 @@ REQUIRED = (
     "docs/README.md",
     "docs/development/WORKFLOW.md",
     "docs/development/CONTEXT_POLICY.md",
+    "docs/development/CHECKPOINTS.md",
+    "docs/architecture/decisions/ADR_TEMPLATE.md",
     "development-state/CURRENT_STATE.yaml",
     "development-state/ACTIVE_WORK.yaml",
+    "development-state/UNRESOLVED_UNKNOWNS.yaml",
+    "development-state/HANDOFF_TEMPLATE.yaml",
     "development-state/blueprint/project-model.yaml",
     "tasks/TASK_TEMPLATE.yaml",
 )

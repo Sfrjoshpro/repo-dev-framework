@@ -9,7 +9,7 @@ understanding check
     ↓
 search existing knowledge
     ↓
-resolve real unknowns
+record unknowns / decisions
     ↓
 ready task contract
     ↓
@@ -21,7 +21,7 @@ validation
     ↓
 diff review
     ↓
-state update
+checkpoint + state update
     ↓
 handoff / pull request
 ```
@@ -34,11 +34,13 @@ Read the current state, active work, task contract, and only the design document
 
 Search the repository before asking a maintainer. A missing answer is not automatically a new design decision.
 
-If a real design decision remains unresolved, stop implementation for that portion of the work and record it.
+If a real design decision remains unresolved, record it in `development-state/UNRESOLVED_UNKNOWNS.yaml` and stop implementation for the affected portion of work.
+
+When the resolution creates a durable architecture or development-policy decision, record it as an ADR under `docs/architecture/decisions/`.
 
 ## 3. Make the task ready
 
-A task should define its goal, allowed paths, non-goals, expected validation, dependencies, and known unknowns.
+A task should define its goal, allowed paths, non-goals, expected validation, dependencies, known unknowns, and any decision references.
 
 Use the lifecycle in `TASK_LIFECYCLE.md`. Implementation begins only after the task reaches `ready`.
 
@@ -74,6 +76,8 @@ Move the task to `validating`, run the task's checks, and prove the requested be
 
 Review the diff against the task contract. Look for scope growth, undocumented assumptions, accidental API changes, and missing tests. Re-run the task guard against the branch base.
 
-## 8. Persist state
+## 8. Checkpoint and persist state
 
-Move the task to `done` only after implementation, validation, diff review, and required state updates are complete. Clear or advance `ACTIVE_WORK.yaml` and leave a handoff when another session or contributor may need to continue the work.
+Create a checkpoint when work is blocked, changes hands, reaches a meaningful boundary, or becomes ready for review. Follow `CHECKPOINTS.md` and use `development-state/HANDOFF_TEMPLATE.yaml` for the record shape.
+
+Move the task to `done` only after implementation, validation, diff review, state updates, blocking-unknown resolution, and any required checkpoint are recorded. Clear or advance `ACTIVE_WORK.yaml` after the repository state is safely recoverable.

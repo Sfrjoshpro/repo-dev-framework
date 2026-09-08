@@ -14,6 +14,7 @@ non_goals: []
 
 dependencies: []
 unknowns: []
+decision_refs: []
 
 validation: []
 
@@ -22,6 +23,8 @@ completion:
   validation_passed: false
   diff_reviewed: false
   state_updated: false
+  blocking_unknowns_resolved: false
+  checkpoint_recorded: false
 
 handoff_notes: []
 
