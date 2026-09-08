@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V4-BLUEPRINT-FLOW.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: feat/blueprint-flow-model
 started_at: 2026-09-07
 
@@ -17,3 +17,4 @@ expected_validation:
 known_unknowns: []
 notes:
   - V4 is deliberately using the framework to build the framework.
+  - Implementation and scope review are complete; CI validation is pending.
