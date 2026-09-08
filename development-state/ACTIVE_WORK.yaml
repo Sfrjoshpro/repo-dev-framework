@@ -1,13 +1,28 @@
 version: 1
-active_task: null
-lifecycle_state: idle
-branch: null
-started_at: null
+active_task: tasks/V9-CONTEXT-WORKING-SET.yaml
+lifecycle_state: active
+branch: feat/v9-context-working-set
+started_at: 2026-09-08
 
-allowed_paths: []
-expected_validation: []
+allowed_paths:
+  - tasks/V9-CONTEXT-WORKING-SET.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+  - development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml
+  - AGENTS.md
+  - docs/development/CONTEXT_POLICY.md
+  - repo_framework/__main__.py
+  - repo_framework/context.py
+  - repo_framework/health.py
+  - scripts/task_guard.py
+expected_validation:
+  - python -m repo_framework context
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml
+  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml --base-ref origin/main
+  - review final diff against allowed_paths
 known_unknowns: []
 notes:
-  - V8 Blueprint Visualization Contract completed and checkpointed in development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml.
-  - V8 is ready for pull request and no subsequent milestone has been started on this branch.
-  - Do not begin another milestone on chore/v8-blueprint-visualization-contract.
+  - V8 is merged; stale pre-merge next actions are being reconciled as V9 activates.
+  - V9 turns context-budget guidance into persisted machine-checkable working-set state.
