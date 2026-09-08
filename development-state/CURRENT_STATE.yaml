@@ -1,15 +1,17 @@
 version: 1
-project_phase: bootstrap
-status: ready
+project_phase: framework-development
+status: active
 
 summary: >-
-  Repository framework initialized. No project-specific implementation is present.
+  V5 repository health work is checkpointed as complete. V6 state reconciliation is
+  active to align persisted current-state metadata with the verified framework state
+  before any new feature milestone begins.
 
-current_milestone: null
-active_task: null
+current_milestone: V6-STATE-RECONCILIATION
+active_task: tasks/V6-STATE-RECONCILIATION.yaml
 blockers: []
 
 next_valid_actions:
-  - define project design truth
-  - create the initial project model
-  - create the first bounded task
+  - run the V6 task guard before implementation
+  - reconcile persisted repository state using only V6 allowed paths
+  - run repository health and final scope validation before checkpoint/handoff
