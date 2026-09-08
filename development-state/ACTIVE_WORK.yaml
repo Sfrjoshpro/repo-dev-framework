@@ -8,5 +8,5 @@ allowed_paths: []
 expected_validation: []
 known_unknowns: []
 notes:
-  - V9 Context Working Set completed and checkpointed in development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml.
+  - V10 Compute Market Routing Contract completed and checkpointed in development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml.
   - ACTIVE_CONTEXT is reset to idle; the next task must initialize context before its pre-implementation guard.

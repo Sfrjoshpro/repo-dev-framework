@@ -3,15 +3,16 @@ project_phase: framework-development
 status: ready
 
 summary: >-
-  V9 Context Working Set is complete and checkpointed. The framework now persists a
-  machine-checkable context working set, exposes context CLI commands, validates context
-  budgets in repository health and task guard, and runs context validation automatically in CI.
+  V10 Compute Market Routing Contract is complete and checkpointed. The framework now has
+  durable provider-agnostic design truth for market freshness/provenance, verified-cost
+  accounting, user-owned compute policy, risk-aware routing, evidence-driven escalation,
+  benchmark qualification, budget behavior, auditability, and vendor independence.
 
 current_milestone: null
 active_task: null
 blockers: []
 
 next_valid_actions:
-  - integrate V9 through the normal pull-request workflow if these commits are not yet on main
-  - once V9 is present on main, select the next smallest coherent milestone from repository state
-  - for the next task, initialize ACTIVE_CONTEXT before running the pre-implementation task guard
+  - integrate V10 through the normal pull-request workflow if these commits are not yet on main
+  - once V10 is present on main, select the next smallest coherent implementation milestone from repository state
+  - initialize ACTIVE_CONTEXT before the next task-specific pre-implementation guard

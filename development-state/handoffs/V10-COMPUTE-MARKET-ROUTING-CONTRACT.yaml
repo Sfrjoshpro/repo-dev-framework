@@ -1,0 +1,51 @@
+version: 1
+task_id: V10-COMPUTE-MARKET-ROUTING-CONTRACT
+checkpoint: milestone-complete
+branch: docs/v10-compute-market-routing-contract
+
+summary: >-
+  V10 defines the provider-agnostic compute-market routing contract. The framework now has
+  design truth for market freshness/provenance, capability roles, user compute policy,
+  verified-cost accounting, risk-aware routing, evidence-driven escalation, benchmark
+  qualification, local/subscription resource handling, auditability, privacy, and vendor independence.
+
+completed:
+  - Defined verified useful work as the optimization target rather than cheapest token price.
+  - Defined deterministic-first and cheapest-sufficient-intelligence principles.
+  - Defined provider/model market catalog fields, freshness, provenance, and stale-data behavior.
+  - Defined candidate qualification before new market entrants can route real work.
+  - Defined development task/risk classification inputs for routing.
+  - Defined user-owned economy/balanced/quality/custom compute policy and hard budget behavior.
+  - Defined routing and escalation behavior, including failed-attempt cost accounting.
+  - Defined empirical project-local performance history and benchmark qualification.
+  - Defined subscription/local-compute boundaries and provider credential/privacy rules.
+  - Defined auditable vendor-independent ownership boundaries and future implementation slices.
+
+validation:
+  passed:
+    - Framework Check run 137 passed with active V10 context/state.
+    - V10 task contract has a valid lifecycle state, nonempty allowed_paths, nonempty validation, and no unresolved unknowns.
+    - Diff review before closeout showed only V10-authorized paths.
+  not_executed:
+    - The literal local command `python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml` was not executable through the GitHub connector. Do not claim it ran.
+  pending:
+    - Pull-request Framework Check branch-base scope enforcement after PR creation.
+
+open_unknowns: []
+blocked_by: []
+
+next_action: >-
+  Return V10 task/work/context state to idle, open the pull request, require PR Framework Check
+  success, then merge to main. Do not implement provider adapters or automatic routing on this branch.
+
+relevant_paths:
+  - docs/architecture/COMPUTE_MARKET_ROUTING.md
+  - tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+
+notes:
+  - V10 is a behavior/architecture contract only.
+  - Current model names and prices intentionally remain external mutable market data.
+  - The user-owned workflow, policy, benchmark evidence, and routing history are intended to remain portable across providers.
