@@ -1,6 +1,6 @@
 id: V10-COMPUTE-MARKET-ROUTING-CONTRACT
 title: Define compute market and routing contract
-status: validating
+status: done
 
 goal: >-
   Define the durable provider-agnostic contract for minimizing verified development cost
@@ -52,9 +52,9 @@ completion:
   implementation_complete: true
   validation_passed: true
   diff_reviewed: true
-  state_updated: false
+  state_updated: true
   blocking_unknowns_resolved: true
-  checkpoint_recorded: false
+  checkpoint_recorded: true
 
 handoff_notes:
   - V10 captures the compute-market vision as design truth before implementation.

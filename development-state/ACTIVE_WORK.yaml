@@ -1,23 +1,12 @@
 version: 1
-active_task: tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
-lifecycle_state: validating
-branch: docs/v10-compute-market-routing-contract
-started_at: 2026-09-08
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
-  - development-state/CURRENT_STATE.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/ACTIVE_CONTEXT.yaml
-  - development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
-  - docs/architecture/COMPUTE_MARKET_ROUTING.md
-expected_validation:
-  - Framework Check passes with active V10 context/state
-  - V10 task contract directly satisfies task-guard readiness fields
-  - pull-request Framework Check enforces branch-base ACTIVE_WORK allowed_paths
-  - review final diff against allowed_paths
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V9 is merged on main.
-  - V10 compute-market routing contract is implemented and under validation.
-  - Literal local task-specific CLI invocation is unavailable through the GitHub connector; do not claim it ran.
+  - V10 Compute Market Routing Contract completed and checkpointed in development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml.
+  - ACTIVE_CONTEXT is reset to idle; the next task must initialize context before its pre-implementation guard.
