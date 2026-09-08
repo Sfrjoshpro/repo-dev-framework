@@ -1,19 +1,17 @@
 version: 1
 project_phase: framework-development
-status: ready
+status: active
 
 summary: >-
-  V8 Blueprint Visualization Contract is complete and checkpointed. The repository now
-  has a durable read-only visualization behavior contract over the existing project model,
-  including project overview, focused architecture inspection, flow presentation,
-  progressive drill-down, filtering, status visibility, traceability, bounded-context
-  behavior, and uncertainty handling. No visualization UI or implementation stack was added.
+  V8 Blueprint Visualization Contract is merged. V9 Context Working Set is active to add
+  persisted, machine-checkable working-context state so long-running agent sessions can
+  minimize unnecessary context growth without relying only on agent discipline.
 
-current_milestone: null
-active_task: null
+current_milestone: V9-CONTEXT-WORKING-SET
+active_task: tasks/V9-CONTEXT-WORKING-SET.yaml
 blockers: []
 
 next_valid_actions:
-  - open a pull request from chore/v8-blueprint-visualization-contract to main
-  - merge only after pull-request validation passes
-  - do not begin another milestone on this branch
+  - run the V9 task-specific pre-implementation guard
+  - implement only the V9 allowed paths after the guard passes
+  - validate context working-set behavior before checkpoint and pull request
