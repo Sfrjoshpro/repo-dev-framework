@@ -1,0 +1,45 @@
+version: 1
+task_id: V6-STATE-RECONCILIATION
+checkpoint: milestone-complete
+branch: chore/v6-state-reconciliation
+commit: null
+
+summary: >-
+  Reconciled stale persisted repository state after V5. CURRENT_STATE now reflects
+  framework-development rather than bootstrap, V6 is complete and idle, validation is
+  clean, and no framework feature or out-of-scope implementation was added.
+
+completed:
+  - Reconciled CURRENT_STATE with the completed V5 checkpoint and current blueprint evidence.
+  - Closed V6 consistently to task done and ACTIVE_WORK idle.
+  - Kept the branch limited to the four declared state/task/handoff paths.
+  - Preserved zero unresolved unknowns and introduced no new design decisions.
+
+validation:
+  commands:
+    - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml
+    - python -m repo_framework check
+    - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml --base-ref origin/main
+    - review final diff against allowed_paths
+  passed:
+    - Pre-implementation task guard returned task guard: OK.
+    - Validation-state repository health passed in GitHub Actions workflow run 34175634712.
+    - Branch-base task guard returned task guard: OK while V6 scope was active.
+    - Post-closeout repository health passed in GitHub Actions workflow run 34175762663.
+    - Final branch comparison showed exactly the four V6 allowed paths and no scope violations.
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Open a pull request for chore/v6-state-reconciliation. After merge, begin any new
+  framework milestone only through a new bounded ready task in a fresh work boundary.
+
+relevant_paths:
+  - tasks/V6-STATE-RECONCILIATION.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V6-STATE-RECONCILIATION.yaml
+notes:
+  - V6 is state reconciliation only; no framework feature milestone was started.
+  - Idle context health is expected to recommend a fresh chat for the next milestone.

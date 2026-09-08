@@ -8,5 +8,6 @@ allowed_paths: []
 expected_validation: []
 known_unknowns: []
 notes:
-  - V5 repository health milestone completed and checkpointed in development-state/handoffs/V5-REPO-HEALTH.yaml.
+  - V6 state reconciliation completed and checkpointed in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
+  - Persisted current state is aligned with completed V5 evidence and the framework blueprint.
   - Context health should report RED while idle, recommending a fresh chat for the next milestone.

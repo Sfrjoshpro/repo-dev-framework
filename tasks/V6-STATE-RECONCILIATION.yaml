@@ -1,0 +1,63 @@
+id: V6-STATE-RECONCILIATION
+title: Reconcile persisted repository state after V5
+status: done
+
+goal: >-
+  Reconcile development-state/CURRENT_STATE.yaml with the already-recorded V5
+  completion evidence and current blueprint so the repository exposes one coherent,
+  recoverable development state before any new framework feature milestone begins.
+
+why: >-
+  CURRENT_STATE.yaml still reports bootstrap/no project-specific implementation while
+  the V5 handoff and project blueprint record completed and verified framework work.
+  AGENTS.md requires source-of-truth conflicts to be resolved rather than guessed through.
+
+required_context:
+  - AGENTS.md
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V5-REPO-HEALTH.yaml
+  - development-state/blueprint/project-model.yaml
+  - docs/development/WORKFLOW.md
+  - docs/development/TASK_LIFECYCLE.md
+  - docs/development/REPO_HEALTH.md
+
+allowed_paths:
+  - tasks/V6-STATE-RECONCILIATION.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V6-STATE-RECONCILIATION.yaml
+
+non_goals:
+  - adding new framework features
+  - redesigning the blueprint schema or flows
+  - changing repository health-check behavior
+  - scanning or refactoring unrelated repository content
+  - inventing a new long-term roadmap beyond evidence already persisted in the repository
+
+dependencies:
+  - V5-REPO-HEALTH checkpoint is present and complete
+  - existing project blueprint remains the implementation-context reference
+unknowns: []
+decision_refs: []
+
+validation:
+  - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml --base-ref origin/main
+  - review final diff against allowed_paths
+  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+
+completion:
+  implementation_complete: true
+  validation_passed: true
+  diff_reviewed: true
+  state_updated: true
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: true
+
+handoff_notes:
+  - Persisted current state now reflects completed V5 evidence and the framework-development phase.
+  - Repository health and both task-guard checks passed before closeout.
+  - The V6 checkpoint is recorded in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
+  - No framework feature implementation was added.
