@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 
+from .context import context_health, load_context, validate_context
+
 ROOT = Path(__file__).resolve().parents[1]
 TASK_STATES = {"backlog", "clarifying", "ready", "active", "validating", "done", "blocked"}
 ACTIVE_STATES = {"idle", "active", "validating", "blocked"}
@@ -11,6 +13,7 @@ REQUIRED_FILES = (
     "AGENTS.md",
     "development-state/CURRENT_STATE.yaml",
     "development-state/ACTIVE_WORK.yaml",
+    "development-state/ACTIVE_CONTEXT.yaml",
     "development-state/UNRESOLVED_UNKNOWNS.yaml",
     "development-state/blueprint/project-model.yaml",
     "tasks/TASK_TEMPLATE.yaml",
@@ -86,11 +89,12 @@ def _section(text: str, name: str, following: tuple[str, ...]) -> str:
     lines = text.splitlines()
     start = None
     end = len(lines)
+    markers = {f"{marker}:" for marker in following}
     for index, line in enumerate(lines):
         if line == f"{name}:":
             start = index + 1
             continue
-        if start is not None and line in {f"{marker}:" for marker in following}:
+        if start is not None and line in markers:
             end = index
             break
     if start is None:
@@ -136,11 +140,9 @@ def _check_active_work() -> tuple[Check, str, str | None]:
     task_status = _scalar(task_text, "status")
     if task_status != lifecycle:
         return Check("Active task", False, f"ACTIVE_WORK={lifecycle}, task={task_status}"), lifecycle, active_task
-
     task_allowed = _top_list(task_text, "allowed_paths")
     if set(allowed) != set(task_allowed):
         return Check("Active task", False, "allowed_paths differ from active task contract"), lifecycle, active_task
-
     return Check("Active task", True, f"{task_status}: {active_task}"), lifecycle, active_task
 
 
@@ -173,20 +175,16 @@ def _check_blueprint() -> Check:
     flows = _section(text, "flows", ())
     node_ids = set(re.findall(r"(?m)^\s+- id:\s*([^\s]+)\s*$", nodes))
     problems: list[str] = []
-
     if not node_ids:
         problems.append("no blueprint nodes found")
-
     for source, target in re.findall(r"(?m)^\s+- from:\s*([^\s]+)\s*\n\s+to:\s*([^\s]+)", edges):
         if source not in node_ids:
             problems.append(f"edge source missing: {source}")
         if target not in node_ids:
             problems.append(f"edge target missing: {target}")
-
     for ref in re.findall(r"(?m)^\s+(?:entry|node):\s*([^\s]+)\s*$", flows):
         if ref not in node_ids:
             problems.append(f"flow node missing: {ref}")
-
     return Check("Blueprint references", not problems, f"OK ({len(node_ids)} nodes)" if not problems else "; ".join(problems))
 
 
@@ -196,20 +194,37 @@ def _check_unknowns() -> Check:
     return Check("Unknowns", True, f"{open_count} open")
 
 
-def _context_advice(lifecycle: str, active_task: str | None) -> tuple[str, str]:
+def _check_context() -> tuple[Check, str, str]:
+    errors = validate_context(ROOT)
+    state = load_context(ROOT)
+    health, recommendation = context_health(state, errors)
+    if errors:
+        return Check("Context working set", False, "; ".join(errors)), health, recommendation
+    if state is None:
+        return Check("Context working set", False, "missing"), health, recommendation
+    detail = "IDLE" if state.active_task is None else f"{state.total_files}/{state.max_files} files, tier {state.context_tier}/{state.max_tier}"
+    return Check("Context working set", True, detail), health, recommendation
+
+
+def _session_advice(lifecycle: str, active_task: str | None, context_status: str, context_recommendation: str) -> tuple[str, str]:
+    if context_status == "RED" and active_task:
+        return context_status, context_recommendation
+    if context_status == "YELLOW":
+        return context_status, context_recommendation
     if lifecycle == "idle":
         return "RED", "START NEW CHAT for the next milestone/task"
     if lifecycle in {"validating", "blocked"}:
         return "YELLOW", "CHECKPOINT SOON; start a new chat after the boundary is persisted"
     if lifecycle == "active" and active_task:
-        return "GREEN", "CONTINUE THIS CHAT while this task remains coherent"
+        return "GREEN", "CONTINUE THIS CHAT while this task and working set remain coherent"
     return "YELLOW", "REVIEW REPOSITORY STATE before continuing"
 
 
 def run_health_check() -> int:
     checks: list[Check] = [_check_structure()]
     active_check, lifecycle, active_task = _check_active_work()
-    checks.extend([active_check, _check_tasks(), _check_blueprint(), _check_unknowns()])
+    context_check, context_status, context_recommendation = _check_context()
+    checks.extend([active_check, context_check, _check_tasks(), _check_blueprint(), _check_unknowns()])
 
     width = max(len(check.name) for check in checks)
     print("Repository Health")
@@ -218,8 +233,8 @@ def run_health_check() -> int:
         status = "OK" if check.ok else "FAIL"
         print(f"{check.name:<{width}}  {status:<4}  {check.detail}")
 
-    context, advice = _context_advice(lifecycle, active_task)
-    print(f"{'Context health':<{width}}  {context}")
+    session, advice = _session_advice(lifecycle, active_task, context_status, context_recommendation)
+    print(f"{'Context health':<{width}}  {session}")
     print(f"{'Chat recommendation':<{width}}  {advice}")
 
     failed = [check for check in checks if not check.ok]
