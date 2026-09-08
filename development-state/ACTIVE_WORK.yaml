@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V5-REPO-HEALTH.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: feat/repo-health-validation
 started_at: 2026-09-07
 
@@ -23,4 +23,5 @@ expected_validation:
 known_unknowns: []
 notes:
   - V5 is dogfooding the framework and must not silently widen scope.
-  - Context health is advisory and does not claim access to ChatGPT token counts.
+  - Implementation and diff review are complete; CI validation is pending.
+  - Context health should report YELLOW while this task is validating.
