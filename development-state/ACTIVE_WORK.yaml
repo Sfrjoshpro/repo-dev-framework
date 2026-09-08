@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V6-STATE-RECONCILIATION.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: chore/v6-state-reconciliation
 started_at: 2026-09-07T20:59:00-04:00
 
@@ -18,5 +18,5 @@ expected_validation:
 known_unknowns: []
 notes:
   - V5 repository health milestone is checkpointed as complete.
-  - V6 is limited to reconciling persisted repository state before any new feature milestone begins.
-  - No framework feature implementation has begun.
+  - V6 persisted-state reconciliation is complete and is now being validated.
+  - No framework feature implementation was added.
