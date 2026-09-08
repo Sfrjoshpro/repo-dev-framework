@@ -1,6 +1,6 @@
 id: V6-STATE-RECONCILIATION
 title: Reconcile persisted repository state after V5
-status: active
+status: validating
 
 goal: >-
   Reconcile development-state/CURRENT_STATE.yaml with the already-recorded V5
@@ -49,13 +49,13 @@ validation:
   - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
 
 completion:
-  implementation_complete: false
+  implementation_complete: true
   validation_passed: false
   diff_reviewed: false
-  state_updated: false
+  state_updated: true
   blocking_unknowns_resolved: true
   checkpoint_recorded: false
 
 handoff_notes:
-  - This task exists to resolve persisted-state drift discovered during idle repository health inspection.
+  - Persisted current state now reflects completed V5 evidence and the framework-development phase.
   - No feature implementation is authorized by this task.
