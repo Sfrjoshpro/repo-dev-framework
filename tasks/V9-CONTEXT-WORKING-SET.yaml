@@ -31,6 +31,7 @@ allowed_paths:
   - repo_framework/context.py
   - repo_framework/health.py
   - scripts/task_guard.py
+  - .github/workflows/framework-check.yml
 
 non_goals:
   - measuring hidden LLM or ChatGPT token counts
@@ -63,3 +64,4 @@ completion:
 handoff_notes:
   - V9 is the first milestone that turns context-budget guidance into persisted machine-checkable state.
   - V9 must remain standard-library only.
+  - The existing framework workflow was explicitly added to allowed_paths so the context command is enforced in CI rather than relying on agent discipline.
