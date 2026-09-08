@@ -1,0 +1,49 @@
+id: V4-BLUEPRINT-FLOW
+title: Define the blueprint and flow model
+status: active
+
+goal: >-
+  Make the repository blueprint expressive enough to map systems, modules, files,
+  requirements, tests, dependencies, user flows, logic flows, and implementation status.
+
+why: >-
+  Agents need a machine-readable project map so they can identify relevant context and
+  dependencies without scanning the whole repository.
+
+required_context:
+  - development-state/blueprint/project-model.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - docs/development/CONTEXT_POLICY.md
+
+allowed_paths:
+  - tasks/V4-BLUEPRINT-FLOW.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - scripts/check_repo_state.py
+
+non_goals:
+  - blueprint visualization UI
+  - automatic source-code graph extraction
+  - schema package or third-party validation dependency
+  - security or release tooling
+
+dependencies: []
+unknowns: []
+decision_refs: []
+
+validation:
+  - python scripts/check_repo_state.py
+  - review blueprint example for valid node, edge, and flow references
+  - review final diff against allowed_paths
+
+completion:
+  implementation_complete: false
+  validation_passed: false
+  diff_reviewed: false
+  state_updated: false
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: false
+
+handoff_notes:
+  - This task is the first deliberate self-hosting/dogfood use of the framework.
