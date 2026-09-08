@@ -1,6 +1,6 @@
 id: V4-BLUEPRINT-FLOW
 title: Define the blueprint and flow model
-status: validating
+status: done
 
 goal: >-
   Make the repository blueprint expressive enough to map systems, modules, files,
@@ -19,6 +19,7 @@ allowed_paths:
   - tasks/V4-BLUEPRINT-FLOW.yaml
   - development-state/ACTIVE_WORK.yaml
   - development-state/blueprint/project-model.yaml
+  - development-state/handoffs/V4-BLUEPRINT-FLOW.yaml
   - docs/architecture/PROJECT_MODEL.md
   - scripts/check_repo_state.py
 
@@ -39,12 +40,14 @@ validation:
 
 completion:
   implementation_complete: true
-  validation_passed: false
+  validation_passed: true
   diff_reviewed: true
   state_updated: true
   blocking_unknowns_resolved: true
-  checkpoint_recorded: false
+  checkpoint_recorded: true
 
 handoff_notes:
   - This task is the first deliberate self-hosting/dogfood use of the framework.
-  - Scope review found only the five declared allowed paths changed.
+  - Scope review found only the five originally declared implementation paths changed.
+  - The checkpoint handoff path was explicitly added during closeout after dogfooding exposed that it had not been authorized in the original task scope.
+  - Framework check passed on PR #4 before merge.
