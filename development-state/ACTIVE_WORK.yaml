@@ -1,22 +1,13 @@
 version: 1
-active_task: tasks/V6-STATE-RECONCILIATION.yaml
-lifecycle_state: validating
-branch: chore/v6-state-reconciliation
-started_at: 2026-09-07T20:59:00-04:00
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V6-STATE-RECONCILIATION.yaml
-  - development-state/CURRENT_STATE.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/handoffs/V6-STATE-RECONCILIATION.yaml
-expected_validation:
-  - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml
-  - python -m repo_framework check
-  - python scripts/task_guard.py --task tasks/V6-STATE-RECONCILIATION.yaml --base-ref origin/main
-  - review final diff against allowed_paths
-  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V5 repository health milestone is checkpointed as complete.
-  - V6 persisted-state reconciliation is complete and is now being validated.
-  - No framework feature implementation was added.
+  - V6 state reconciliation completed and checkpointed in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
+  - Persisted current state is aligned with completed V5 evidence and the framework blueprint.
+  - Context health should report RED while idle, recommending a fresh chat for the next milestone.
