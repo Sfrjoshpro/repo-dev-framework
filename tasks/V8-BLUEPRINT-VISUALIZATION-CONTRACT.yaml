@@ -1,6 +1,6 @@
 id: V8-BLUEPRINT-VISUALIZATION-CONTRACT
 title: Define the blueprint visualization contract
-status: ready
+status: active
 
 goal: >-
   Define the smallest durable design contract for visualizing the self-hosted project
@@ -66,4 +66,4 @@ completion:
   checkpoint_recorded: false
 
 handoff_notes:
-  - Definition of Ready is satisfied: observable goal, exact paths, non-goals, dependencies, zero unresolved unknowns, and validation are declared.
+  - Definition of Ready was satisfied before activation: observable goal, exact paths, non-goals, dependencies, zero unresolved unknowns, and validation were declared.
