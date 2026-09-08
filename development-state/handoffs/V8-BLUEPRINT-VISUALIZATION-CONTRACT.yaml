@@ -1,0 +1,60 @@
+version: 1
+task_id: V8-BLUEPRINT-VISUALIZATION-CONTRACT
+checkpoint: milestone-complete
+branch: chore/v8-blueprint-visualization-contract
+commit: null
+
+summary: >-
+  Defined the durable read-only behavior contract for visualizing the existing self-hosted
+  project model. The contract covers project overview, focused architecture inspection,
+  flow presentation, progressive drill-down, filtering, status presentation, traceability,
+  bounded-context behavior, uncertainty handling, and conformance without selecting or
+  implementing a visualization technology or changing project-model semantics.
+
+completed:
+  - Added docs/architecture/BLUEPRINT_VISUALIZATION.md as the V8 visualization behavior contract.
+  - Preserved the existing project-model node, edge, flow, and status vocabularies exactly.
+  - Defined project-overview, focused-node, and flow-view behavior without choosing a UI implementation stack.
+  - Defined progressive disclosure and bounded-context behavior that does not override task allowed_paths.
+  - Defined filtering, traceability, missing/unknown-data behavior, and a read-only interaction boundary.
+  - Added a self-hosting acceptance example using the existing repository-health subsystem and flow.
+  - Reviewed the contract against docs/architecture/PROJECT_MODEL.md and development-state/blueprint/project-model.yaml.
+  - Reviewed the branch comparison against main; all changed paths are declared V8 allowed_paths.
+  - GitHub Actions Framework Check passed on the consistent V8 validating state.
+  - Executed the task-specific branch-base guard logic with the exact repository guard and the actual V8 changed-path set; result was task guard: OK.
+  - Reconciled the V8 task to done, CURRENT_STATE to idle/ready, and ACTIVE_WORK to idle.
+
+validation:
+  commands:
+    - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+    - python -m repo_framework check
+    - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml --base-ref origin/main
+    - review visualization contract against docs/architecture/PROJECT_MODEL.md and development-state/blueprint/project-model.yaml
+    - verify the contract does not choose an implementation stack or alter blueprint semantics
+    - review final diff against allowed_paths
+    - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+  passed:
+    - The task-specific pre-implementation guard returned task guard: OK before implementation.
+    - GitHub Actions Framework Check run #103 passed while V8 was validating.
+    - The branch-base task-guard logic returned task guard: OK for the V8 branch changed-path set.
+    - Contract review found no new node, edge, flow, or status semantics and no implementation-stack choice.
+    - Branch comparison against main showed only declared V8 allowed paths.
+    - State reconciliation completed with no unresolved unknowns or blockers.
+  pending: []
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Open a pull request from chore/v8-blueprint-visualization-contract to main. Merge only
+  after pull-request validation passes. Do not begin another milestone on this branch.
+
+relevant_paths:
+  - tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+  - docs/architecture/BLUEPRINT_VISUALIZATION.md
+notes:
+  - No visualization UI, frontend framework, graph library, rendering engine, transport protocol, automatic extraction, health/guard behavior change, or blueprint semantic change was introduced.
+  - V8 is complete and ready for pull request once final branch health is green.
