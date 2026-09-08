@@ -3,16 +3,16 @@ project_phase: framework-development
 status: ready
 
 summary: >-
-  V5 repository health and V6 state reconciliation are checkpointed complete.
-  V7 Blueprint Self-Hosting implementation is complete and validating. Repository health,
-  blueprint reference review, and diff scope review pass; only the explicit branch-base
-  task guard remains before V7 can be marked done and made ready for PR.
+  V5 repository health, V6 state reconciliation, and V7 Blueprint Self-Hosting are
+  checkpointed complete. The self-hosted project blueprint now models the verified
+  repository-health subsystem and repository/context-health flow. The repository is
+  idle, coherent, and ready for the V7 pull request; no V8 milestone has been started.
 
-current_milestone: V7-BLUEPRINT-SELF-HOSTING
-active_task: tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+current_milestone: null
+active_task: null
 blockers: []
 
 next_valid_actions:
-  - run python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
-  - if it passes, close V7 to done and clear ACTIVE_WORK to idle
-  - open the V7 pull request; do not start V8 on this branch
+  - open the V7 pull request from chore/v7-blueprint-self-hosting
+  - merge only after pull-request validation passes
+  - after merge, identify any next milestone from persisted project knowledge in a fresh bounded task
