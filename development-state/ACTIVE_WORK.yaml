@@ -16,6 +16,7 @@ allowed_paths:
   - repo_framework/context.py
   - repo_framework/health.py
   - scripts/task_guard.py
+  - .github/workflows/framework-check.yml
 expected_validation:
   - python -m repo_framework context
   - python -m repo_framework check
@@ -26,3 +27,4 @@ known_unknowns: []
 notes:
   - V8 is merged; stale pre-merge next actions are being reconciled as V9 activates.
   - V9 turns context-budget guidance into persisted machine-checkable working-set state.
+  - Framework workflow scope was explicitly added so CI runs the context command automatically.
