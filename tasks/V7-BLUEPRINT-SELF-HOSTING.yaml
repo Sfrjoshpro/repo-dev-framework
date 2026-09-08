@@ -1,0 +1,66 @@
+id: V7-BLUEPRINT-SELF-HOSTING
+title: Extend blueprint self-hosting coverage for repository health
+status: active
+
+goal: >-
+  Extend the machine-readable project blueprint so it models the verified repository
+  health subsystem added in V5 and the health/context-check flow that now participates
+  in bounded task delivery, without changing repository-health behavior.
+
+why: >-
+  The repository is healthy and idle after V6, while the blueprint and its core flows
+  remain marked implementing. V5 introduced verified repository-health behavior that is
+  not yet represented in the self-hosted project model. Modeling that existing behavior
+  is the smallest coherent continuation before any visualization or automatic graph
+  extraction work.
+
+required_context:
+  - AGENTS.md
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - tasks/V5-REPO-HEALTH.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - docs/development/REPO_HEALTH.md
+  - repo_framework/health.py
+
+allowed_paths:
+  - tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml
+
+non_goals:
+  - changing repository-health behavior or CLI output
+  - changing task-guard behavior
+  - blueprint visualization UI
+  - automatic source-code graph or dependency extraction
+  - introducing third-party schema or graph dependencies
+  - refactoring unrelated repository content
+  - inventing a broader roadmap beyond the persisted blueprint and existing framework docs
+
+dependencies:
+  - V5-REPO-HEALTH is complete and verified
+  - V6-STATE-RECONCILIATION is complete and main is authoritative
+unknowns: []
+decision_refs: []
+
+validation:
+  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
+  - review blueprint references for valid node, edge, and flow IDs
+  - review final diff against allowed_paths
+  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+
+completion:
+  implementation_complete: false
+  validation_passed: false
+  diff_reviewed: false
+  state_updated: false
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: false
+
+handoff_notes:
+  - Planning and activation only; blueprint implementation has not begun.
