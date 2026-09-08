@@ -1,6 +1,6 @@
 id: V6-STATE-RECONCILIATION
 title: Reconcile persisted repository state after V5
-status: validating
+status: done
 
 goal: >-
   Reconcile development-state/CURRENT_STATE.yaml with the already-recorded V5
@@ -50,12 +50,14 @@ validation:
 
 completion:
   implementation_complete: true
-  validation_passed: false
-  diff_reviewed: false
+  validation_passed: true
+  diff_reviewed: true
   state_updated: true
   blocking_unknowns_resolved: true
-  checkpoint_recorded: false
+  checkpoint_recorded: true
 
 handoff_notes:
   - Persisted current state now reflects completed V5 evidence and the framework-development phase.
-  - No feature implementation is authorized by this task.
+  - Repository health and both task-guard checks passed before closeout.
+  - The V6 checkpoint is recorded in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
+  - No framework feature implementation was added.
