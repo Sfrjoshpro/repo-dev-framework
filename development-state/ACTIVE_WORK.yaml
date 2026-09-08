@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: chore/v8-blueprint-visualization-contract
 started_at: 2026-09-07T22:01:00-04:00
 
@@ -22,4 +22,4 @@ known_unknowns: []
 notes:
   - V7 Blueprint Self-Hosting is merged to main and repository health passed on the merge commit.
   - V8 was selected from existing project-model design and previously deferred visualization scope; no new roadmap was introduced.
-  - Implementation must not begin until the task-specific pre-implementation guard passes.
+  - The V8 visualization contract is implemented and validation is in progress.
