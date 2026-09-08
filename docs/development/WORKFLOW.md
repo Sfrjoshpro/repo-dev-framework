@@ -19,7 +19,7 @@ implementation
     ↓
 validation
     ↓
-diff review
+repo health + diff review
     ↓
 checkpoint + state update
     ↓
@@ -72,9 +72,19 @@ Prefer a narrow change over opportunistic cleanup. If new work is discovered, re
 
 Move the task to `validating`, run the task's checks, and prove the requested behavior rather than only compilation or import success.
 
+Run the framework health check before handoff:
+
+```text
+python -m repo_framework check
+```
+
+The legacy `python scripts/check_repo_state.py` command runs the same health checks.
+
 ## 7. Review
 
 Review the diff against the task contract. Look for scope growth, undocumented assumptions, accidental API changes, and missing tests. Re-run the task guard against the branch base.
+
+Use the context-health recommendation as a visible session-boundary hint. It is based on persisted repository lifecycle state, not hidden token counts.
 
 ## 8. Checkpoint and persist state
 

@@ -1,0 +1,64 @@
+id: V5-REPO-HEALTH
+title: Add semantic repository health validation
+status: done
+
+goal: >-
+  Add one repository health command that checks framework structure, task/state
+  consistency, blueprint references, completion evidence, and gives a simple
+  context-health recommendation for whether to continue or start a new chat.
+
+why: >-
+  The framework currently verifies mostly file presence. Dogfooding V4 showed that
+  stale lifecycle state can survive a merge, so repository state needs semantic checks.
+
+required_context:
+  - development-state/ACTIVE_WORK.yaml
+  - tasks/TASK_TEMPLATE.yaml
+  - development-state/blueprint/project-model.yaml
+  - development-state/HANDOFF_TEMPLATE.yaml
+  - scripts/check_repo_state.py
+  - docs/development/WORKFLOW.md
+  - docs/development/CHECKPOINTS.md
+
+allowed_paths:
+  - tasks/V5-REPO-HEALTH.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V5-REPO-HEALTH.yaml
+  - repo_framework/__init__.py
+  - repo_framework/__main__.py
+  - repo_framework/health.py
+  - scripts/check_repo_state.py
+  - docs/development/REPO_HEALTH.md
+  - docs/development/WORKFLOW.md
+  - .github/workflows/framework-check.yml
+
+non_goals:
+  - blueprint visualization UI
+  - automatic source-code dependency extraction
+  - third-party schema packages
+  - security or release hardening
+  - measuring actual ChatGPT token counts
+
+dependencies: []
+unknowns: []
+decision_refs: []
+
+validation:
+  - python -m repo_framework check
+  - python scripts/check_repo_state.py
+  - review final diff against allowed_paths
+  - verify V5 task and active-work lifecycle agree
+
+completion:
+  implementation_complete: true
+  validation_passed: true
+  diff_reviewed: true
+  state_updated: true
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: true
+
+handoff_notes:
+  - Context health is advisory and based on persisted repository state, not hidden model token counts.
+  - Final diff review found only paths declared in allowed_paths changed.
+  - Initial CI correctly exposed a parser bug in allowed-path comparison; the parser was fixed and CI passed on the corrected implementation.
+  - V5 is closed out before merge so main does not inherit stale validating state.

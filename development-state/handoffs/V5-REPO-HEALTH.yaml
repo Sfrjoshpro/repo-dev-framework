@@ -1,0 +1,43 @@
+version: 1
+task_id: V5-REPO-HEALTH
+checkpoint: milestone-complete
+branch: feat/repo-health-validation
+commit: null
+
+summary: >-
+  Added semantic repository health validation, blueprint reference checks, task/state
+  consistency checks, completion evidence checks, and an advisory chat-context signal.
+
+completed:
+  - Added python -m repo_framework check.
+  - Kept scripts/check_repo_state.py as a compatibility entry point.
+  - Added semantic task, active-work, handoff, blueprint, and unknown checks.
+  - Added GREEN/YELLOW/RED chat recommendations based on persisted lifecycle state.
+  - Integrated the health command into CI and workflow documentation.
+  - Fixed the parser bug exposed by the first CI run.
+
+validation:
+  commands:
+    - python -m repo_framework check
+    - python scripts/check_repo_state.py
+    - python scripts/task_guard.py --base-ref origin/main
+  passed:
+    - Framework check passed after the YAML-subset parser correction.
+    - Final diff remained within the V5 allowed paths.
+  failed:
+    - Initial Framework check exposed newline bleed in the first allowed-path parser implementation; corrected before closeout.
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Merge PR #6 after the final closeout CI run passes, then begin the next milestone in a fresh chat as recommended by idle context health.
+
+relevant_paths:
+  - repo_framework/health.py
+  - repo_framework/__main__.py
+  - docs/development/REPO_HEALTH.md
+  - tasks/V5-REPO-HEALTH.yaml
+  - development-state/ACTIVE_WORK.yaml
+
+notes:
+  - Context health is advisory and does not measure hidden model token usage.
