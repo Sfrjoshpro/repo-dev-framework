@@ -1,6 +1,6 @@
 id: V9-CONTEXT-WORKING-SET
 title: Add enforced context working-set state
-status: active
+status: validating
 
 goal: >-
   Add a machine-readable active context working set and repository commands that make
@@ -54,9 +54,9 @@ validation:
   - review final diff against allowed_paths
 
 completion:
-  implementation_complete: false
-  validation_passed: false
-  diff_reviewed: false
+  implementation_complete: true
+  validation_passed: true
+  diff_reviewed: true
   state_updated: false
   blocking_unknowns_resolved: true
   checkpoint_recorded: false
@@ -65,3 +65,5 @@ handoff_notes:
   - V9 is the first milestone that turns context-budget guidance into persisted machine-checkable state.
   - V9 must remain standard-library only.
   - The existing framework workflow was explicitly added to allowed_paths so the context command is enforced in CI rather than relying on agent discipline.
+  - Framework Check run 124 passed with the new Context working set step, repository health, legacy health entry point, and task guard.
+  - Diff review found only V9-authorized paths changed.
