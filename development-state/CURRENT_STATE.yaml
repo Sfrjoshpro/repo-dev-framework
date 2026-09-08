@@ -4,14 +4,14 @@ status: ready
 
 summary: >-
   V5 repository health and V6 state reconciliation are checkpointed complete.
-  Persisted repository state now reflects the verified framework-development baseline
-  and the repository is idle, coherent, and recoverable for the next bounded milestone.
+  V7 Blueprint Self-Hosting is now the active bounded milestone, selected from the
+  existing unfinished blueprint/self-hosting state. Implementation has not begun.
 
-current_milestone: null
-active_task: null
+current_milestone: V7-BLUEPRINT-SELF-HOSTING
+active_task: tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
 blockers: []
 
 next_valid_actions:
-  - identify the next smallest coherent milestone from persisted project knowledge
-  - create a bounded task contract before implementation
-  - activate only a ready task with explicit allowed_paths and validation
+  - run the V7 pre-implementation task guard
+  - implement only after the guard passes
+  - remain within the declared V7 allowed_paths
