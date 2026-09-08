@@ -4,14 +4,15 @@ status: ready
 
 summary: >-
   V5 repository health and V6 state reconciliation are checkpointed complete.
-  V7 Blueprint Self-Hosting is now the active bounded milestone, selected from the
-  existing unfinished blueprint/self-hosting state. Implementation has not begun.
+  V7 Blueprint Self-Hosting implementation is complete and validating. Repository health,
+  blueprint reference review, and diff scope review pass; only the explicit branch-base
+  task guard remains before V7 can be marked done and made ready for PR.
 
 current_milestone: V7-BLUEPRINT-SELF-HOSTING
 active_task: tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
 blockers: []
 
 next_valid_actions:
-  - run the V7 pre-implementation task guard
-  - implement only after the guard passes
-  - remain within the declared V7 allowed_paths
+  - run python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
+  - if it passes, close V7 to done and clear ACTIVE_WORK to idle
+  - open the V7 pull request; do not start V8 on this branch
