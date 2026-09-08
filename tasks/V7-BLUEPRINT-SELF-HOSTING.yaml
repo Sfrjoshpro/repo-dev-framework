@@ -1,6 +1,6 @@
 id: V7-BLUEPRINT-SELF-HOSTING
 title: Extend blueprint self-hosting coverage for repository health
-status: active
+status: validating
 
 goal: >-
   Extend the machine-readable project blueprint so it models the verified repository
@@ -55,7 +55,7 @@ validation:
   - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
 
 completion:
-  implementation_complete: false
+  implementation_complete: true
   validation_passed: false
   diff_reviewed: false
   state_updated: false
@@ -63,4 +63,5 @@ completion:
   checkpoint_recorded: false
 
 handoff_notes:
-  - Planning and activation only; blueprint implementation has not begun.
+  - Blueprint now models the verified repository-health subsystem and repository/context-health flow without changing executable behavior.
+  - Validation and closeout are in progress.
