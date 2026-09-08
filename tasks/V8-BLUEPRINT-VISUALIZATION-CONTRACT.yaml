@@ -1,0 +1,69 @@
+id: V8-BLUEPRINT-VISUALIZATION-CONTRACT
+title: Define the blueprint visualization contract
+status: ready
+
+goal: >-
+  Define the smallest durable design contract for visualizing the self-hosted project
+  blueprint so future UI work can present systems, dependencies, flows, status, and
+  drill-down context without changing blueprint semantics or selecting an implementation stack.
+
+why: >-
+  V4 established the blueprint/flow model and explicitly deferred visualization. V7 then
+  extended self-hosting coverage and completed the repository-health model. The project-model
+  design already states that a UI may show systems first and reveal modules or files as users
+  drill down. With self-hosting now complete enough to exercise that model, the next smallest
+  coherent milestone is to define the visualization behavior before any UI implementation.
+
+required_context:
+  - AGENTS.md
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - tasks/V4-BLUEPRINT-FLOW.yaml
+  - tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - docs/development/CONTEXT_POLICY.md
+  - docs/development/TASK_LIFECYCLE.md
+
+allowed_paths:
+  - tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+  - docs/architecture/BLUEPRINT_VISUALIZATION.md
+
+non_goals:
+  - implementing a web, desktop, IDE, or terminal visualization UI
+  - choosing a frontend framework, graph library, rendering engine, or transport protocol
+  - automatic source-code graph or dependency extraction
+  - changing project-model node, edge, flow, or status semantics
+  - changing repository-health or task-guard behavior
+  - broad repository documentation cleanup
+  - inventing milestones beyond the visualization contract
+
+dependencies:
+  - V4-BLUEPRINT-FLOW is complete
+  - V7-BLUEPRINT-SELF-HOSTING is complete and merged to main
+  - main repository health passes
+unknowns: []
+decision_refs: []
+
+validation:
+  - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml --base-ref origin/main
+  - review visualization contract against docs/architecture/PROJECT_MODEL.md and development-state/blueprint/project-model.yaml
+  - verify the contract does not choose an implementation stack or alter blueprint semantics
+  - review final diff against allowed_paths
+  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+
+completion:
+  implementation_complete: false
+  validation_passed: false
+  diff_reviewed: false
+  state_updated: false
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: false
+
+handoff_notes:
+  - Definition of Ready is satisfied: observable goal, exact paths, non-goals, dependencies, zero unresolved unknowns, and validation are declared.
