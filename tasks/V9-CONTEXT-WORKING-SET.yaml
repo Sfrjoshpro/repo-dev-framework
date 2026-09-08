@@ -1,0 +1,70 @@
+id: V9-CONTEXT-WORKING-SET
+title: Add enforced context working-set state
+status: done
+
+goal: >-
+  Add a machine-readable active context working set and repository commands that make
+  context growth visible, bounded, and consistent with the active task instead of relying
+  only on an agent to remember the context policy.
+
+why: >-
+  Fresh-session recovery is efficient, but long sessions can still grow context through
+  unnecessary reads, rereads, and dependency expansion. The framework needs persisted
+  working-set state and mechanical checks so context discipline is measurable and durable.
+
+required_context:
+  - AGENTS.md
+  - docs/development/CONTEXT_POLICY.md
+  - development-state/ACTIVE_WORK.yaml
+  - repo_framework/__main__.py
+  - scripts/task_guard.py
+
+allowed_paths:
+  - tasks/V9-CONTEXT-WORKING-SET.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+  - development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml
+  - AGENTS.md
+  - docs/development/CONTEXT_POLICY.md
+  - repo_framework/__main__.py
+  - repo_framework/context.py
+  - repo_framework/health.py
+  - scripts/task_guard.py
+  - .github/workflows/framework-check.yml
+
+non_goals:
+  - measuring hidden LLM or ChatGPT token counts
+  - intercepting or sandboxing third-party agent application file access
+  - automatic whole-repository dependency extraction
+  - blueprint visualization implementation
+  - changing project-model semantics
+  - adding third-party parser or schema dependencies
+  - unrelated framework cleanup
+
+dependencies: []
+unknowns: []
+decision_refs: []
+
+validation:
+  - python -m repo_framework context
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml
+  - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml --base-ref origin/main
+  - review final diff against allowed_paths
+
+completion:
+  implementation_complete: true
+  validation_passed: true
+  diff_reviewed: true
+  state_updated: true
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: true
+
+handoff_notes:
+  - V9 is the first milestone that turns context-budget guidance into persisted machine-checkable state.
+  - V9 remains standard-library only.
+  - The existing framework workflow was explicitly added to allowed_paths so the context command is enforced in CI rather than relying on agent discipline.
+  - Framework Check run 124 passed with the new Context working set step, repository health, legacy health entry point, and task guard.
+  - Diff review found only V9-authorized paths changed.
+  - Milestone checkpoint is recorded in development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml.

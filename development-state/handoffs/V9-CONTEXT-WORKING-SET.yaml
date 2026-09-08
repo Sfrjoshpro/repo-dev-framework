@@ -1,0 +1,55 @@
+version: 1
+task_id: V9-CONTEXT-WORKING-SET
+checkpoint: milestone-complete
+branch: feat/v9-context-working-set
+commit: 1a418e4fd76b7a4f0a8104145c799379c69f7bcb
+
+summary: >-
+  V9 adds persisted context working-set state and mechanical context-budget enforcement.
+  Agents can initialize, inspect, expand, and explicitly broaden context through the
+  repo_framework CLI; repository health, task guard, and CI now validate that state.
+
+completed:
+  - Added development-state/ACTIVE_CONTEXT.yaml as durable working-set state.
+  - Added python -m repo_framework context with init, add, broaden, and reset operations.
+  - Integrated context consistency and budgets into repository health.
+  - Integrated context consistency and budgets into task_guard.py.
+  - Updated AGENTS.md and CONTEXT_POLICY.md to route agents through the working set.
+  - Added the context command to the existing Framework check workflow.
+  - Reconciled stale V8 pre-merge state while activating V9.
+
+validation:
+  commands:
+    - python -m repo_framework context
+    - python -m repo_framework check
+    - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml
+    - python scripts/task_guard.py --task tasks/V9-CONTEXT-WORKING-SET.yaml --base-ref origin/main
+    - review final diff against allowed_paths
+  passed:
+    - Pre-implementation task-specific guard returned task guard: OK.
+    - Framework Check run 124 passed with the new Context working set step.
+    - Repository health passed with ACTIVE_CONTEXT validation enabled.
+    - Task guard passed with ACTIVE_CONTEXT validation enabled.
+    - Diff review found only V9-authorized paths; workflow scope was added explicitly before use.
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Return repository task/context state to idle, verify final CI, then integrate V9 through
+  the normal pull-request workflow without starting another milestone on this branch.
+
+relevant_paths:
+  - development-state/ACTIVE_CONTEXT.yaml
+  - repo_framework/context.py
+  - repo_framework/__main__.py
+  - repo_framework/health.py
+  - scripts/task_guard.py
+  - .github/workflows/framework-check.yml
+  - docs/development/CONTEXT_POLICY.md
+  - AGENTS.md
+
+notes:
+  - V9 does not claim access to hidden model token counts and cannot intercept third-party agent reads.
+  - The enforceable boundary is repository-declared context state, budgets, task guard, health, and CI.
+  - The V9 self-hosted working set reached 12 of 15 allowed files, producing a YELLOW checkpoint recommendation as designed.

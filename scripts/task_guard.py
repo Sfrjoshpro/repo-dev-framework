@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Validate task lifecycle state and changed-file scope.
-
-This script intentionally uses only the Python standard library. It reads the
-small subset of YAML fields the framework needs and compares changed paths
-against the active task's allowed paths.
-"""
+"""Validate task lifecycle, changed-file scope, and active context state."""
 
 from __future__ import annotations
 
@@ -14,6 +9,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from repo_framework.context import validate_context
+
 ACTIVE_WORK = ROOT / "development-state" / "ACTIVE_WORK.yaml"
 TASK_TEMPLATE = ROOT / "tasks" / "TASK_TEMPLATE.yaml"
 
@@ -85,16 +85,13 @@ def validate_task_file(path: Path) -> list[str]:
 
     if status not in VALID_STATES:
         errors.append(f"invalid task status: {status!r}")
-
     if status in {"ready", "active", "validating", "done"}:
         if not allowed_paths:
             errors.append(f"{status} task must declare at least one allowed path")
         if not validation:
             errors.append(f"{status} task must declare validation")
-
     if status in {"ready", "active"} and unknowns:
         errors.append(f"{status} task cannot contain unresolved unknowns")
-
     return errors
 
 
@@ -108,13 +105,11 @@ def validate_active_work(base_ref: str | None) -> list[str]:
     if active_task is None:
         if lifecycle_state not in {None, "idle"}:
             errors.append("ACTIVE_WORK without an active task must use lifecycle_state: idle")
+        errors.extend(validate_context(ROOT))
         return errors
 
     if lifecycle_state not in {"active", "validating", "blocked"}:
-        errors.append(
-            "active work lifecycle_state must be active, validating, or blocked"
-        )
-
+        errors.append("active work lifecycle_state must be active, validating, or blocked")
     if lifecycle_state in {"active", "validating"} and not allowed_paths:
         errors.append("active work must declare at least one allowed path")
 
@@ -124,9 +119,7 @@ def validate_active_work(base_ref: str | None) -> list[str]:
         except RuntimeError as exc:
             errors.append(str(exc))
         else:
-            framework_paths = {
-                "development-state/ACTIVE_WORK.yaml",
-            }
+            framework_paths = {"development-state/ACTIVE_WORK.yaml"}
             violations = [
                 path
                 for path in changed
@@ -139,20 +132,14 @@ def validate_active_work(base_ref: str | None) -> list[str]:
                     + ", ".join(sorted(violations))
                 )
 
+    errors.extend(validate_context(ROOT))
     return errors
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--task",
-        type=Path,
-        help="validate a task contract file",
-    )
-    parser.add_argument(
-        "--base-ref",
-        help="compare HEAD with this Git ref and enforce ACTIVE_WORK allowed_paths",
-    )
+    parser.add_argument("--task", type=Path, help="validate a task contract file")
+    parser.add_argument("--base-ref", help="compare HEAD with this Git ref and enforce ACTIVE_WORK allowed_paths")
     args = parser.parse_args()
 
     errors = validate_active_work(args.base_ref)
@@ -166,7 +153,6 @@ def main() -> int:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
-
     print("task guard: OK")
     return 0
 

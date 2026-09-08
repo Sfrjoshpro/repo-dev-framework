@@ -3,17 +3,15 @@ project_phase: framework-development
 status: ready
 
 summary: >-
-  V8 Blueprint Visualization Contract is complete and checkpointed. The repository now
-  has a durable read-only visualization behavior contract over the existing project model,
-  including project overview, focused architecture inspection, flow presentation,
-  progressive drill-down, filtering, status visibility, traceability, bounded-context
-  behavior, and uncertainty handling. No visualization UI or implementation stack was added.
+  V9 Context Working Set is complete and checkpointed. The framework now persists a
+  machine-checkable context working set, exposes context CLI commands, validates context
+  budgets in repository health and task guard, and runs context validation automatically in CI.
 
 current_milestone: null
 active_task: null
 blockers: []
 
 next_valid_actions:
-  - open a pull request from chore/v8-blueprint-visualization-contract to main
-  - merge only after pull-request validation passes
-  - do not begin another milestone on this branch
+  - integrate V9 through the normal pull-request workflow if these commits are not yet on main
+  - once V9 is present on main, select the next smallest coherent milestone from repository state
+  - for the next task, initialize ACTIVE_CONTEXT before running the pre-implementation task guard

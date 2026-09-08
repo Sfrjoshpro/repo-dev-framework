@@ -8,6 +8,5 @@ allowed_paths: []
 expected_validation: []
 known_unknowns: []
 notes:
-  - V8 Blueprint Visualization Contract completed and checkpointed in development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml.
-  - V8 is ready for pull request and no subsequent milestone has been started on this branch.
-  - Do not begin another milestone on chore/v8-blueprint-visualization-contract.
+  - V9 Context Working Set completed and checkpointed in development-state/handoffs/V9-CONTEXT-WORKING-SET.yaml.
+  - ACTIVE_CONTEXT is reset to idle; the next task must initialize context before its pre-implementation guard.

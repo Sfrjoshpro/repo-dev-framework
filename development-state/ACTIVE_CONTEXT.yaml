@@ -1,0 +1,15 @@
+version: 1
+active_task: null
+context_tier: 0
+
+working_set: []
+expanded_paths: []
+expansion_log: []
+broad_searches: 0
+broad_search_log: []
+
+budget:
+  max_tier: 0
+  max_files: 0
+  max_expansions: 0
+  max_broad_searches: 0
