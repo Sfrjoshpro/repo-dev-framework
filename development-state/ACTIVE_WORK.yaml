@@ -1,6 +1,6 @@
 version: 1
 active_task: tasks/V9-CONTEXT-WORKING-SET.yaml
-lifecycle_state: active
+lifecycle_state: validating
 branch: feat/v9-context-working-set
 started_at: 2026-09-08
 
@@ -25,6 +25,6 @@ expected_validation:
   - review final diff against allowed_paths
 known_unknowns: []
 notes:
-  - V8 is merged; stale pre-merge next actions are being reconciled as V9 activates.
-  - V9 turns context-budget guidance into persisted machine-checkable working-set state.
-  - Framework workflow scope was explicitly added so CI runs the context command automatically.
+  - V9 implementation is complete and diff-reviewed.
+  - Framework Check run 124 passed with automatic context validation.
+  - Context health is expected to be YELLOW at this checkpoint because the bounded working set reached 12/15 files.
