@@ -1,0 +1,39 @@
+version: 1
+task_id: V4-BLUEPRINT-FLOW
+checkpoint: milestone-complete
+branch: feat/blueprint-flow-model
+commit: bbeeaead9bb0cbd9bc62f4a5b32f1598d0fd2002
+
+summary: >-
+  V4 is complete and merged. The repository now has a machine-readable blueprint model
+  for systems, files, requirements, tests, dependencies, user flows, logic flows, and status.
+
+completed:
+  - Added the V4 blueprint/flow task contract and self-hosted active-work state.
+  - Expanded project-model.yaml with versioned node, edge, flow, requirement, test, and status vocabularies.
+  - Documented blueprint conventions in docs/architecture/PROJECT_MODEL.md.
+  - Extended structural validation for the required blueprint sections.
+  - Verified the Framework check passed on PR #4 before merge.
+
+validation:
+  commands:
+    - python scripts/check_repo_state.py
+  passed:
+    - Framework check on PR #4
+    - final diff matched the declared V4 implementation scope
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Start V5 by testing schema/state consistency and repository health automation against
+  the now-self-hosted framework rather than adding more blueprint features.
+
+relevant_paths:
+  - development-state/blueprint/project-model.yaml
+  - docs/architecture/PROJECT_MODEL.md
+  - tasks/V4-BLUEPRINT-FLOW.yaml
+  - development-state/ACTIVE_WORK.yaml
+notes:
+  - Dogfooding exposed two process gaps: post-merge state remained validating, and the original task scope omitted its checkpoint handoff path.
+  - Both gaps should inform V5 automation and schema consistency checks.
