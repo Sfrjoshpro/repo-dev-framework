@@ -1,17 +1,17 @@
 version: 1
 project_phase: framework-development
-status: active
+status: validating
 
 summary: >-
-  V8 Blueprint Visualization Contract is merged. V9 Context Working Set is active to add
-  persisted, machine-checkable working-context state so long-running agent sessions can
-  minimize unnecessary context growth without relying only on agent discipline.
+  V9 Context Working Set implementation is complete. The repository now has persisted
+  machine-checkable context state, context CLI commands, health/guard integration, and
+  automatic CI enforcement of the context working set. Final checkpoint and closeout are in progress.
 
 current_milestone: V9-CONTEXT-WORKING-SET
 active_task: tasks/V9-CONTEXT-WORKING-SET.yaml
 blockers: []
 
 next_valid_actions:
-  - run the V9 task-specific pre-implementation guard
-  - implement only the V9 allowed paths after the guard passes
-  - validate context working-set behavior before checkpoint and pull request
+  - record the V9 checkpoint and handoff
+  - return ACTIVE_WORK and ACTIVE_CONTEXT to idle after completion is persisted
+  - open a pull request only after final framework validation passes
