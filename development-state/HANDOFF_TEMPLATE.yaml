@@ -1,0 +1,24 @@
+version: 1
+task_id: EXAMPLE-001
+checkpoint: session-end
+branch: feature/example
+commit: null
+
+summary: >-
+  State what changed and the observable project state at this checkpoint.
+
+completed:
+  - Replace with completed work.
+
+validation:
+  commands: []
+  passed: []
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  State the smallest valid next action for the next session or contributor.
+
+relevant_paths: []
+notes: []
