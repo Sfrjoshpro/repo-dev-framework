@@ -1,0 +1,63 @@
+id: V10-COMPUTE-MARKET-ROUTING-CONTRACT
+title: Define compute market and routing contract
+status: active
+
+goal: >-
+  Define the durable provider-agnostic contract for minimizing verified development cost
+  across deterministic tools, local compute, subscriptions where automatable, and metered
+  model APIs while preserving user-selected quality, time, risk, and budget constraints.
+
+why: >-
+  Context efficiency alone does not minimize total development cost. The framework needs a
+  durable contract for current market data, provider/model capability metadata, cost accounting,
+  routing, escalation, benchmarking, and user-owned policy before any provider integration is built.
+
+required_context:
+  - AGENTS.md
+  - docs/development/CONTEXT_POLICY.md
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+
+allowed_paths:
+  - tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/ACTIVE_CONTEXT.yaml
+  - development-state/handoffs/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - docs/architecture/COMPUTE_MARKET_ROUTING.md
+
+non_goals:
+  - implementing provider API clients
+  - storing API keys or credentials
+  - hard-coding a permanent model winner
+  - scraping provider sites in CI
+  - implementing automatic model switching
+  - implementing billing or payment systems
+  - claiming subscription capacity can be automated where no supported interface exists
+  - measuring hidden model reasoning tokens or hidden application context
+  - changing project-model semantics
+  - unrelated framework cleanup
+
+dependencies: []
+unknowns: []
+decision_refs: []
+
+validation:
+  - python -m repo_framework context
+  - python -m repo_framework check
+  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml
+  - python scripts/task_guard.py --task tasks/V10-COMPUTE-MARKET-ROUTING-CONTRACT.yaml --base-ref origin/main
+  - review final diff against allowed_paths
+
+completion:
+  implementation_complete: false
+  validation_passed: false
+  diff_reviewed: false
+  state_updated: false
+  blocking_unknowns_resolved: true
+  checkpoint_recorded: false
+
+handoff_notes:
+  - V10 captures the compute-market vision as design truth before implementation.
+  - The optimization target is verified useful work, not cheapest token price.
+  - Provider/model identities are replaceable market data; workflow policy remains user-owned.
