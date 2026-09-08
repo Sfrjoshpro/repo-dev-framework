@@ -1,27 +1,12 @@
 version: 1
-active_task: tasks/V5-REPO-HEALTH.yaml
-lifecycle_state: validating
-branch: feat/repo-health-validation
-started_at: 2026-09-07
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V5-REPO-HEALTH.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/handoffs/V5-REPO-HEALTH.yaml
-  - repo_framework/__init__.py
-  - repo_framework/__main__.py
-  - repo_framework/health.py
-  - scripts/check_repo_state.py
-  - docs/development/REPO_HEALTH.md
-  - docs/development/WORKFLOW.md
-  - .github/workflows/framework-check.yml
-expected_validation:
-  - python -m repo_framework check
-  - python scripts/check_repo_state.py
-  - review final diff against allowed_paths
-  - verify V5 task and active-work lifecycle agree
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V5 is dogfooding the framework and must not silently widen scope.
-  - Implementation and diff review are complete; CI validation is pending.
-  - Context health should report YELLOW while this task is validating.
+  - V5 repository health milestone completed and checkpointed in development-state/handoffs/V5-REPO-HEALTH.yaml.
+  - Context health should report RED while idle, recommending a fresh chat for the next milestone.
