@@ -1,25 +1,13 @@
 version: 1
-active_task: tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
-lifecycle_state: validating
-branch: chore/v8-blueprint-visualization-contract
-started_at: 2026-09-07T22:01:00-04:00
+active_task: null
+lifecycle_state: idle
+branch: null
+started_at: null
 
-allowed_paths:
-  - tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
-  - development-state/CURRENT_STATE.yaml
-  - development-state/ACTIVE_WORK.yaml
-  - development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
-  - docs/architecture/BLUEPRINT_VISUALIZATION.md
-expected_validation:
-  - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml
-  - python -m repo_framework check
-  - python scripts/task_guard.py --task tasks/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml --base-ref origin/main
-  - review visualization contract against docs/architecture/PROJECT_MODEL.md and development-state/blueprint/project-model.yaml
-  - verify the contract does not choose an implementation stack or alter blueprint semantics
-  - review final diff against allowed_paths
-  - verify CURRENT_STATE.yaml and ACTIVE_WORK.yaml agree on milestone and active task
+allowed_paths: []
+expected_validation: []
 known_unknowns: []
 notes:
-  - V7 Blueprint Self-Hosting is merged to main and repository health passed on the merge commit.
-  - V8 was selected from existing project-model design and previously deferred visualization scope; no new roadmap was introduced.
-  - The V8 visualization contract is implemented and validation is in progress.
+  - V8 Blueprint Visualization Contract completed and checkpointed in development-state/handoffs/V8-BLUEPRINT-VISUALIZATION-CONTRACT.yaml.
+  - V8 is ready for pull request and no subsequent milestone has been started on this branch.
+  - Do not begin another milestone on chore/v8-blueprint-visualization-contract.
