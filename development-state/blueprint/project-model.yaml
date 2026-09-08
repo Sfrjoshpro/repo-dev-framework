@@ -1,4 +1,4 @@
-version: 2
+version: 3
 schema_version: 1
 
 # The blueprint is intentionally selective. Model enough detail to support
@@ -73,6 +73,7 @@ nodes:
       - req.bounded_scope
     test_refs:
       - test.task_guard
+      - test.repo_structure
     tags:
       - state
 
@@ -87,6 +88,7 @@ nodes:
       - req.bounded_scope
     test_refs:
       - test.task_guard
+      - test.repo_structure
     tags:
       - scope
 
@@ -105,11 +107,27 @@ nodes:
       - architecture
       - navigation
 
+  - id: framework.repo_health
+    type: module
+    name: Repository health subsystem
+    status: verified
+    responsibility: Validate persisted framework structure and lifecycle consistency and emit context-health guidance.
+    paths:
+      - repo_framework/health.py
+    requirement_refs:
+      - req.persisted_state
+    test_refs:
+      - test.repo_structure
+    tags:
+      - validation
+      - state
+      - context
+
   - id: framework.repo_check
     type: file
-    name: Repository structural check
+    name: Repository health compatibility entry point
     status: verified
-    responsibility: Verify required framework artifacts and blueprint sections exist.
+    responsibility: Preserve the legacy script entry point for the repository health subsystem.
     paths:
       - scripts/check_repo_state.py
     requirement_refs:
@@ -118,6 +136,7 @@ nodes:
       - test.repo_structure
     tags:
       - validation
+      - compatibility
 
   - id: req.bounded_context
     type: requirement
@@ -151,6 +170,7 @@ nodes:
     responsibility: Important development knowledge must survive session boundaries in repository state.
     paths:
       - docs/development/CHECKPOINTS.md
+      - docs/development/REPO_HEALTH.md
     requirement_refs: []
     test_refs:
       - test.repo_structure
@@ -172,10 +192,11 @@ nodes:
 
   - id: test.repo_structure
     type: test
-    name: Repository structure check
+    name: Repository health check
     status: verified
-    responsibility: Detect missing required framework artifacts or blueprint sections.
+    responsibility: Detect missing framework artifacts, inconsistent lifecycle state, incomplete task evidence, invalid blueprint references, and unresolved unknowns.
     paths:
+      - repo_framework/health.py
       - scripts/check_repo_state.py
     requirement_refs:
       - req.persisted_state
@@ -196,6 +217,9 @@ edges:
   - from: framework
     to: framework.blueprint
     type: contains
+  - from: framework
+    to: framework.repo_health
+    type: contains
   - from: framework.agent_entry
     to: framework.active_work
     type: routes_to
@@ -208,6 +232,21 @@ edges:
   - from: framework.blueprint
     to: req.bounded_context
     type: implements
+  - from: framework.repo_health
+    to: framework.active_work
+    type: reads
+  - from: framework.repo_health
+    to: framework.task_contract
+    type: reads
+  - from: framework.repo_health
+    to: framework.blueprint
+    type: reads
+  - from: framework.repo_health
+    to: req.persisted_state
+    type: implements
+  - from: framework.repo_check
+    to: framework.repo_health
+    type: routes_to
   - from: test.task_guard
     to: req.bounded_scope
     type: verifies
@@ -232,8 +271,8 @@ flows:
         action: Load only relevant architecture and dependency context.
       - node: test.task_guard
         action: Check scope before implementation and handoff.
-      - node: test.repo_structure
-        action: Validate required framework state before checkpoint.
+      - node: framework.repo_health
+        action: Validate persisted repository consistency and context health before checkpoint.
     outcome: A reviewed change with bounded scope and persisted handoff state.
 
   - id: flow.context_resolution
@@ -251,3 +290,21 @@ flows:
       - node: framework.blueprint
         action: Follow only relevant graph relationships and flow nodes.
     outcome: A minimal task-specific context set without default whole-repository scanning.
+
+  - id: flow.repository_health
+    name: Repository and context health check
+    type: logic
+    status: verified
+    entry: framework.repo_health
+    steps:
+      - node: framework.repo_health
+        action: Verify required framework structure and persisted lifecycle consistency.
+      - node: framework.active_work
+        action: Supply active task, branch, lifecycle state, and allowed paths.
+      - node: framework.task_contract
+        action: Supply task lifecycle, scope, and completion evidence.
+      - node: framework.blueprint
+        action: Supply node, edge, and flow references for integrity validation.
+      - node: framework.repo_health
+        action: Surface unresolved unknowns and derive context-health guidance from persisted lifecycle state.
+    outcome: A pass or fail repository-health result plus a visible continue, checkpoint, or fresh-chat recommendation.

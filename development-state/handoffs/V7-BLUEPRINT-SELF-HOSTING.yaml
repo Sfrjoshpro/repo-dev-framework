@@ -1,0 +1,56 @@
+version: 1
+task_id: V7-BLUEPRINT-SELF-HOSTING
+checkpoint: milestone-complete
+branch: chore/v7-blueprint-self-hosting
+commit: null
+
+summary: >-
+  Extended the self-hosted project blueprint to model the verified repository-health
+  subsystem and its repository/context-health flow without changing executable health
+  or task-guard behavior. Implementation, validation, reference review, scope review,
+  state reconciliation, and checkpointing are complete.
+
+completed:
+  - Added a verified repository-health subsystem node for repo_framework/health.py.
+  - Connected repository health to active work, task contracts, the blueprint, and persisted-state requirements.
+  - Updated the legacy repository-check node to represent its compatibility-entry-point role.
+  - Added a verified repository/context-health logic flow and integrated health validation into bounded task delivery.
+  - Reviewed blueprint node, edge, and flow references for valid IDs.
+  - Reviewed the branch diff against V7 allowed_paths; no out-of-scope files were changed.
+  - GitHub Actions repository health, compatibility health entry point, and standard task guard passed while V7 was validating.
+  - User ran the explicit branch-base task guard against origin/main and reported task guard: OK.
+  - Reconciled the V7 task to done, CURRENT_STATE to idle/ready, and ACTIVE_WORK to idle.
+
+validation:
+  commands:
+    - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+    - python -m repo_framework check
+    - python scripts/task_guard.py --task tasks/V7-BLUEPRINT-SELF-HOSTING.yaml --base-ref origin/main
+    - review blueprint references for valid node, edge, and flow IDs
+    - review final diff against allowed_paths
+  passed:
+    - User reported the task-specific pre-implementation guard returned task guard: OK.
+    - GitHub Actions repository health passed while V7 was validating.
+    - GitHub Actions compatibility repository check passed while V7 was validating.
+    - GitHub Actions standard task guard passed while V7 was validating.
+    - User reported the explicit branch-base task guard returned task guard: OK.
+    - Branch comparison against main showed only V7 declared allowed paths.
+    - Blueprint reference review found no missing node IDs in added edges or flow steps.
+  pending: []
+  failed: []
+
+open_unknowns: []
+blocked_by: []
+next_action: >-
+  Open a pull request from chore/v7-blueprint-self-hosting to main. Merge only after
+  pull-request validation passes. Do not begin V8 or another milestone on this branch.
+
+relevant_paths:
+  - tasks/V7-BLUEPRINT-SELF-HOSTING.yaml
+  - development-state/CURRENT_STATE.yaml
+  - development-state/ACTIVE_WORK.yaml
+  - development-state/blueprint/project-model.yaml
+  - development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml
+notes:
+  - No repository-health behavior, task-guard behavior, visualization UI, graph extraction, or roadmap expansion was introduced.
+  - V7 is complete and ready for pull request.

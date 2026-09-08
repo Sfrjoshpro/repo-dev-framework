@@ -3,15 +3,16 @@ project_phase: framework-development
 status: ready
 
 summary: >-
-  V5 repository health and V6 state reconciliation are checkpointed complete.
-  Persisted repository state now reflects the verified framework-development baseline
-  and the repository is idle, coherent, and recoverable for the next bounded milestone.
+  V5 repository health, V6 state reconciliation, and V7 Blueprint Self-Hosting are
+  checkpointed complete. The self-hosted project blueprint now models the verified
+  repository-health subsystem and repository/context-health flow. The repository is
+  idle, coherent, and ready for the V7 pull request; no V8 milestone has been started.
 
 current_milestone: null
 active_task: null
 blockers: []
 
 next_valid_actions:
-  - identify the next smallest coherent milestone from persisted project knowledge
-  - create a bounded task contract before implementation
-  - activate only a ready task with explicit allowed_paths and validation
+  - open the V7 pull request from chore/v7-blueprint-self-hosting
+  - merge only after pull-request validation passes
+  - after merge, identify any next milestone from persisted project knowledge in a fresh bounded task

@@ -8,6 +8,6 @@ allowed_paths: []
 expected_validation: []
 known_unknowns: []
 notes:
-  - V6 state reconciliation completed and checkpointed in development-state/handoffs/V6-STATE-RECONCILIATION.yaml.
-  - Persisted current state is aligned with completed V5 evidence and the framework blueprint.
-  - Context health should report RED while idle, recommending a fresh chat for the next milestone.
+  - V7 Blueprint Self-Hosting completed and checkpointed in development-state/handoffs/V7-BLUEPRINT-SELF-HOSTING.yaml.
+  - V7 is ready for pull request and no subsequent milestone has been started on this branch.
+  - Context health should report RED while idle, recommending a fresh chat for the next milestone after merge.
