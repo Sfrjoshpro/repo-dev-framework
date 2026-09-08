@@ -37,45 +37,65 @@ def _read(relative: str) -> str:
 
 
 def _scalar(text: str, key: str) -> str | None:
-    match = re.search(rf"(?m)^{re.escape(key)}:\s*(.*?)\s*$", text)
-    if not match:
-        return None
-    value = match.group(1).strip()
-    if value in {"", "null", "~"}:
-        return None
-    return value.strip('"\'')
+    prefix = f"{key}:"
+    for line in text.splitlines():
+        if line.startswith(prefix):
+            value = line[len(prefix):].strip()
+            if value in {"", "null", "~"}:
+                return None
+            return value.strip('"\'')
+    return None
+
+
+def _indented_block(text: str, key: str) -> list[str]:
+    lines = text.splitlines()
+    marker = f"{key}:"
+    for index, line in enumerate(lines):
+        if line == marker:
+            block: list[str] = []
+            for candidate in lines[index + 1:]:
+                if candidate and not candidate.startswith((" ", "\t")):
+                    break
+                block.append(candidate)
+            return block
+    return []
 
 
 def _bool_in_block(text: str, block: str, key: str) -> bool | None:
-    match = re.search(
-        rf"(?ms)^{re.escape(block)}:\s*\n((?:^[ ]+.*\n?)*)",
-        text,
-    )
-    if not match:
-        return None
-    field = re.search(rf"(?m)^\s+{re.escape(key)}:\s*(true|false)\s*$", match.group(1))
-    if not field:
-        return None
-    return field.group(1) == "true"
+    prefix = f"  {key}:"
+    for line in _indented_block(text, block):
+        if line.startswith(prefix):
+            value = line[len(prefix):].strip()
+            if value == "true":
+                return True
+            if value == "false":
+                return False
+    return None
 
 
 def _top_list(text: str, key: str) -> list[str]:
-    match = re.search(rf"(?ms)^{re.escape(key)}:\s*\n((?:^[ ]+.*\n?)*)", text)
-    if not match:
-        return []
-    return [m.group(1).strip() for m in re.finditer(r"(?m)^\s+-\s+(.+?)\s*$", match.group(1))]
+    values: list[str] = []
+    for line in _indented_block(text, key):
+        stripped = line.strip()
+        if stripped.startswith("- "):
+            values.append(stripped[2:].strip())
+    return values
 
 
 def _section(text: str, name: str, following: tuple[str, ...]) -> str:
-    starts = re.search(rf"(?m)^{re.escape(name)}:\s*$", text)
-    if not starts:
+    lines = text.splitlines()
+    start = None
+    end = len(lines)
+    for index, line in enumerate(lines):
+        if line == f"{name}:":
+            start = index + 1
+            continue
+        if start is not None and line in {f"{marker}:" for marker in following}:
+            end = index
+            break
+    if start is None:
         return ""
-    end = len(text)
-    for marker in following:
-        found = re.search(rf"(?m)^{re.escape(marker)}:\s*$", text[starts.end():])
-        if found:
-            end = min(end, starts.end() + found.start())
-    return text[starts.end():end]
+    return "\n".join(lines[start:end])
 
 
 def _check_structure() -> Check:
@@ -157,7 +177,7 @@ def _check_blueprint() -> Check:
     if not node_ids:
         problems.append("no blueprint nodes found")
 
-    for source, target in re.findall(r"(?ms)^\s+- from:\s*([^\s]+)\s*\n\s+to:\s*([^\s]+)", edges):
+    for source, target in re.findall(r"(?m)^\s+- from:\s*([^\s]+)\s*\n\s+to:\s*([^\s]+)", edges):
         if source not in node_ids:
             problems.append(f"edge source missing: {source}")
         if target not in node_ids:
