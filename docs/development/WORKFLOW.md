@@ -11,7 +11,9 @@ search existing knowledge
     ↓
 resolve real unknowns
     ↓
-approved task scope
+ready task contract
+    ↓
+activate task + scope
     ↓
 implementation
     ↓
@@ -34,22 +36,44 @@ Search the repository before asking a maintainer. A missing answer is not automa
 
 If a real design decision remains unresolved, stop implementation for that portion of the work and record it.
 
-## 3. Bound the change
+## 3. Make the task ready
 
-A task should define its goal, allowed area, non-goals, expected validation, and known dependencies.
+A task should define its goal, allowed paths, non-goals, expected validation, dependencies, and known unknowns.
 
-## 4. Implement
+Use the lifecycle in `TASK_LIFECYCLE.md`. Implementation begins only after the task reaches `ready`.
+
+## 4. Activate and enforce scope
+
+Record the task in `development-state/ACTIVE_WORK.yaml`, set `lifecycle_state: active`, and copy the approved `allowed_paths` into active work.
+
+An empty `allowed_paths` list does not authorize implementation.
+
+Run:
+
+```text
+python scripts/task_guard.py --task tasks/<task>.yaml
+```
+
+When validating a branch against a base ref, run:
+
+```text
+python scripts/task_guard.py --task tasks/<task>.yaml --base-ref origin/main
+```
+
+If a required change falls outside the declared paths, stop and revise the task contract before making the edit. Do not widen scope silently.
+
+## 5. Implement
 
 Prefer a narrow change over opportunistic cleanup. If new work is discovered, record it separately unless it blocks the current task.
 
-## 5. Validate
+## 6. Validate
 
-Run the task's checks. Validation should prove the requested behavior, not just compilation or import success.
+Move the task to `validating`, run the task's checks, and prove the requested behavior rather than only compilation or import success.
 
-## 6. Review
+## 7. Review
 
-Review the diff against the task contract. Look for scope growth, undocumented assumptions, accidental API changes, and missing tests.
+Review the diff against the task contract. Look for scope growth, undocumented assumptions, accidental API changes, and missing tests. Re-run the task guard against the branch base.
 
-## 7. Persist state
+## 8. Persist state
 
-Update `development-state/` when the repository's actual state changes. Leave a handoff when another session or contributor may need to continue the work.
+Move the task to `done` only after implementation, validation, diff review, and required state updates are complete. Clear or advance `ACTIVE_WORK.yaml` and leave a handoff when another session or contributor may need to continue the work.

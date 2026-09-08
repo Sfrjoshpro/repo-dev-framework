@@ -24,3 +24,8 @@ completion:
   state_updated: false
 
 handoff_notes: []
+
+# Valid states:
+# backlog -> clarifying -> ready -> active -> validating -> done
+# blocked may be used when progress cannot continue.
+# See docs/development/TASK_LIFECYCLE.md for allowed transitions and gates.
